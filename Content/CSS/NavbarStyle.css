@@ -1,0 +1,275 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+/* adding style to the body element  */
+body {
+     font-family:sans-serif; 
+    background: #f7e2e1;
+
+}
+
+navbar {
+    background: #992723;
+    height: 80px;
+    width: 80%;
+}
+
+label.logo {
+    color: aliceblue;
+    font-size: 35px;
+    line-height: 80px;
+    padding: 0px 30px 0px 10px;
+    font-weight: bold;
+}
+
+    label.logo img {
+        height: 30px;
+        width: 30px;
+        margin-right: 10px;
+    }
+
+nav ul {
+    float: right;
+    margin-right: 20px;
+}
+
+    nav ul li {
+        display: inline-block;
+        line-height: 80px;
+        margin: 0 5px;
+    }
+
+        nav ul li a {
+            color: white;
+            font-size: 17px;
+            padding: 7px 13px;
+            border-radius: 3px;
+            text-transform: none;
+        }
+
+a.active, a:hover {
+    background: #7e0f0f;
+    transition: .5s;
+}
+
+.checkbtn {
+    font-size: 30px;
+    color: rgb(246, 245, 248);
+    float: right;
+    line-height: 80px;
+    margin-right: 40px;
+    cursor: pointer;
+    display: none;
+}
+
+#check {
+    display: none;
+}
+
+@media (max-width:952px) {
+    label.logo {
+        font-size: 30px;
+        padding-left: 50px;
+        color: aliceblue;
+    }
+
+    nav ul li a {
+        font-size: 16px;
+    }
+}
+
+@media (max-width:858px) {
+    .checkbtn {
+        display: block;
+    }
+
+    ul {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        background: #b94145;
+        top: 80px;
+        left: -100%;
+        text-align: center;
+        transition: all .5s;
+    }
+
+    nav ul li {
+        display: block;
+        margin: 50px 0;
+        line-height: 30px;
+    }
+
+        nav ul li a {
+            font-size: 20px;
+        }
+
+    a:hover, a.active {
+        background: none;
+        color: #0082e6;
+    }
+
+    #check:checked ~ ul {
+        left: 0;
+    }
+}
+
+/* adding style to the id  home  */
+
+
+/* adding style to the footer section  */
+footer {
+    position: fixed;
+    bottom: 0;
+}
+
+@media (max-height:800px) {
+    footer {
+        position: static;
+    }
+
+    header {
+        padding-top: 40px;
+    }
+}
+
+.footerdistributed {
+    background-color: rgb(125, 23, 23);
+    /* windows:100%; */
+    box-sizing: border-box;
+    text-align: left;
+    padding: 50px 50px 60px 50px;
+    margin-top: 80px;
+}
+
+    .footerdistributed .footerleft, .footerdistributed .footercenter, .footerdistributed .footerright {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    .footerdistributed .footerleft {
+        width: 30%;
+    }
+
+    .footerdistributed h3 {
+        color: #ffff;
+        margin: 0;
+    }
+
+    .footerdistributed .footerlinks {
+        color: #ffff;
+        margin: 20px 0 12px;
+    }
+
+        .footerdistributed .footerlinks a {
+            display: inline-block;
+            line-height: 1.8;
+            text-decoration: none;
+            color: inherit;
+        }
+
+    .footerdistributed .footercompany {
+        color: #8f9296;
+        font-size: 14px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+    .footerdistributed .footercenter {
+        width: 35%;
+    }
+
+        .footerdistributed .footercenter i {
+            background-color: #33383b;
+            color: #ffff;
+            font-size: 25px;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 42px;
+            margin: 10px 15px;
+            vertical-align: middle;
+        }
+
+        .footerdistributed .footercenter p {
+            display: inline-block;
+            color: #ffff;
+            vertical-align: middle;
+            margin: 0;
+        }
+
+            .footerdistributed .footercenter p span {
+                display: block;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 2;
+            }
+
+            .footerdistributed .footercenter p a {
+                color: #e0ac la;
+                text-decoration: none;
+            }
+
+    .footerdistributed .footerright {
+        width: 30%;
+    }
+
+    .footerdistributed .footerabout {
+        line-height: 20px;
+        color: #ced0d2;
+        font-size: 15px;
+        font-weight: normal;
+        margin: 0;
+    }
+
+        .footerdistributed .footerabout span {
+            display: block;
+            color: #ffff;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+    .footerdistributed .icons {
+        margin-top: 25px;
+    }
+
+        .footerdistributed .icons a {
+            display: inline-block;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            background-color: #33383b;
+            border-radius: 2px;
+            font-size: 20px;
+            color: #ffff;
+            text-align: center;
+            line-height: 35px;
+            margin-right: 3px;
+            margin-bottom: 5px;
+        }
+
+            .footerdistributed .icons a:hover {
+                background-color: #40d3dc;
+            }
+
+.footerlinks a:hover {
+    color: #40d3dc;
+}
+
+@media(max-width:880px) {
+    .footerdistributed .footerleft, .footerdistributed .footercenter, .footerdistributed .footerright {
+        display: block;
+        width: 100%;
+        margin-bottom: 40px;
+        text-align: center;
+    }
+
+    .footerdistributed .footercenter {
+        margin-left: 0;
+    }
+}

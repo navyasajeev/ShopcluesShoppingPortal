@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ShopcluesShoppingPortal.Models.Login>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GetLoginDetails</title>
+</head>
+<body>
+    <p>
+        @Html.ActionLink("Create New", "InsertLoginDetails", null, new {@class="btn-btn-primary"})
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Password)
+            </th>
+            <th></th>
+        </tr>
+    
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Password)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditLoginDetails", new { id=item.UserID }) |
+           
+                @Html.ActionLink("Delete", "Delete", new { id=item.UserID })
+            </td>
+        </tr>
+    }
+    
+    </table>
+</body>
+</html>

@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="~/Content/CSS/NavbarStyle.css" rel="stylesheet" />
+
+    <style>
+        .topnav-right {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm ">
+        <div class="container">
+            <label class="logo">
+                <img src="@Url.Content("~/Content/Images/Shopclueslogo.png")" alt="Shopclues Logo">
+                Shopclues
+            </label>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="topnav-right">
+                <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav">
+                        <li>@Html.ActionLink("Home", "MainDash", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("About us", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Contact us", "Contactus", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li><a href="Registration.html">Register</a></li>
+                        <li><a href="Login.html">Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+
+
+        <footer class="footerdistributed">
+            <div class="footerleft">
+                <h3>Shopclues</span></h3>
+                <p class="footerlinks">
+                    <a href="home.html">Home</a>
+                    |
+                    <a href="Aboutus.html">About us</a>
+                    |
+                    <a href="Contactus.html">Contact us</a>
+                    |
+                </p>
+                <p class="footercompany">
+                    Copyright <i class="fa-regular fa-copyright"></i> 2024<strong>Shopclues</strong>
+                    | All rights reserved
+                </p>
+            </div>
+            <!-- add all the content in the footer center  -->
+            <div class="footercenter">
+                <div>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p><span>46765 Shopclues complex,</span>Palai</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-envelope"></i>
+                    <p>shopclues@gmail.com</p>
+                </div>
+                <div>
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <p>+917653456237</p>
+                </div>
+            </div>
+            <!-- add all the content in the footer right  -->
+            <div class="footerright">
+                <p class="footerabout">
+                    <span>About the company</span>
+                    <strong>Shopclues</strong>is India’s first online Managed Marketplace that connects buyers and sellers online and offers a trusted and safe online shopping environment.
+                </p>
+                <div class="icons">
+                    <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+

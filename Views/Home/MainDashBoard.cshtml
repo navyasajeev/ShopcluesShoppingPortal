@@ -1,0 +1,130 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+ 
+    <meta name="viewport" content="width=device-width" />
+    <title>MainDashBoard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link href="~/Content/CSS/Image carousel.css" rel="stylesheet" />
+    <link href="~/Content/CSS/NavbarStyle.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <input type="checkbox" id="check">
+            <label for="check" class="checkbtn">
+                <i class="fas fa-bars"></i>
+            </label>
+
+            <label class="logo"><img src="~/Content/Images/Shopclueslogo.png">Shopclues</label>
+            <ul>
+                <li>@Html.ActionLink("Home", "MainDashBoard", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("About us", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li>@Html.ActionLink("Contact us", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                <li><a href="Registraion.html">Register</a></li>
+                <li><a href="login.html"> Login</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <section class="homepage" id="home">
+        <div class="slideshow-container">
+
+            <!-- Full-width images with number and caption text -->
+            <div class="mySlides fade">
+                <div class="numbertext">1 / 3</div>
+                <img src="~/Content/Images/pexels-wdnet-230544.jpg" style="width:100%" ; />
+                <div class="text">Happiness is not in money, but in shopping. </div>
+            </div>
+
+            <div class="mySlides fade">
+
+                <div class="numbertext">2 / 3</div>
+                <img src="~/Content/Images/pexels-olly-1050244.jpg" style="width:100%" ; />
+
+                <div class="text">Caption Two</div>
+            </div>
+
+            <div class="mySlides fade">
+                <div class="numbertext">3 / 3</div>
+                <img src="~/Content/Images/pexels-olly-974911.jpg" style="width:100%" ; />
+                <div class="text">Caption Three</div>
+            </div>
+
+            <!-- Next and previous buttons -->
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+        <br>
+        </section>
+        
+            
+                <footer class="footerdistributed">
+                    <div class="footerleft">
+                        <h3>Shopclues</span></h3>
+                        <p class="footerlinks">
+                            <a href="home.html">Home</a>
+                            |
+                            <a href="Aboutus.html">About us</a>
+                            |
+                            <a href="Contactus.html">Contact us</a>
+                            |
+                        </p>
+                        <p class="footercompany">
+                            Copyright <i class="fa-regular fa-copyright"></i> 2024<strong>Shopclues</strong>
+                            | All rights reserved
+                        </p>
+                    </div>
+                    <!-- add all the content in the footer center  -->
+                    <div class="footercenter">
+                        <div>
+                            <i class="fa-solid fa-location-dot"></i>
+                            <p><span>46765 Shopclues complex,</span>Palai</p>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-envelope"></i>
+                            <p>shopclues@gmail.com</p>
+                        </div>
+                        <div>
+                            <i class="fa-solid fa-phone-volume"></i>
+                            <p>+917653456237</p>
+                        </div>
+                    </div>
+                    <!-- add all the content in the footer right  -->
+                    <div class="footerright">
+                        <p class="footerabout">
+                            <span>About the company</span>
+                            <strong>Shopclues</strong>is India’s first online Managed Marketplace that connects buyers and sellers online and offers a trusted and safe online shopping environment.
+                        </p>
+                        <div class="icons">
+                            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+                            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+
+                        </div>
+                    </div>
+                    <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+                </footer>
+
+
+        <!-- image slider end -->
+ 
+    <!-- footer session starts here  -->
+    
+
+   
+    <script src="~/Scripts/Custom JS/Image Carousel.js"></script>
+
+   
+</body>
+</html>
+
+

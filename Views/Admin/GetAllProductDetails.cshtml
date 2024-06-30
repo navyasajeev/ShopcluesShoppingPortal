@@ -1,0 +1,70 @@
+﻿@model IEnumerable<ShopcluesShoppingPortal.Models.ProductDetail>
+
+@{
+    ViewBag.Title = "GetAllProductDetails";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>All product details</h2>
+
+<p>
+    @Html.ActionLink("Create new product", "AddProductDetails", null, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Stock)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductImage)
+        </th>
+         <th>
+     @Html.DisplayNameFor(model => model.Price)
+ </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CategoryName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Stock)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProductImage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "EditProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-success" })
+            @Html.ActionLink("Details", "Details", null, new { id = item.ProductID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Delete", "DeleteProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

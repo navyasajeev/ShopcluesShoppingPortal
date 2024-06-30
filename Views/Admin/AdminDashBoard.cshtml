@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "AdminDashBoard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Dashboard</h2>
+
+<div class="card-group">
+    <div class="card">
+        
+        <img src="~/Content/Images/pexels-olly-1050244.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Product Details</h5>
+            
+            @Html.ActionLink("Get details", "GetAllProductDetails", null, new { @class = "btn btn-primary" })
+
+        </div>
+    </div>
+    <div class="card">
+
+        <img src="~/Content/Images/pexels-olly-974911.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">User account details</h5>
+           
+            @Html.ActionLink("Get details", "GetAllCustomers", "NewRegister", null, new { @class = "btn btn-primary" })
+
+        </div>
+    </div>
+    <div class="card">
+    
+        <img src="~/Content/Images/pexels-wdnet-230544.jpg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <h5 class="card-title">Payment Details</h5>
+            <a href="#" class="btn btn-primary">Go</a>
+
+        </div>
+    </div>
+</div> 
+
+
