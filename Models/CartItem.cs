@@ -12,7 +12,7 @@ namespace ShopcluesShoppingPortal.Models
             public int CartItemId { get; set; }
 
    
-            public int UserID { get; set; }
+            public string EmailAddress { get; set; }
             public int ProductID { get; set; }
 
            public int Quantity { get; set; }

@@ -17,7 +17,10 @@
     </style>
 </head>
 <body>
-
+    @{
+        string userEmail = Session["userEmail"] as string;
+    }
+   
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm ">
         <div class="container">
             <label class="logo">
@@ -31,11 +34,10 @@
             <div class="topnav-right">
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav">
+                        <li><a class="nav-link" href="@Url.Action("Details","NewRegister")">@userEmail</a></li>
                         <li>@Html.ActionLink("Home", "MainDash", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("About us", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Login", "NewLogin", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Register", "AddCustomerDetails", "NewRegister", new { area = "" }, new { @class = "nav-link" })</li>
-                        <li>@Html.ActionLink("Contact us", "Contactus", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Add to cart", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Logout", "Contactus", "Home", new { area = "" }, new { @class = "nav-link" })</li>
 
                     </ul>
                 </div>
@@ -105,5 +107,6 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
 
 

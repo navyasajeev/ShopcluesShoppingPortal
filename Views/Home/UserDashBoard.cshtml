@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ShopcluesShoppingPortal.Models.ProductDetail>
+
+@{
+    ViewBag.Title = "UserDashBoard";
+    Layout = "~/Views/Shared/_UserView.cshtml";
+}
+<link href="~/Content/CSS/CardStyle.css" rel="stylesheet" />
+@{
+    string userEmail = Session["userEmail"] as string;
+}
+
+<div class="about">
+
+    @if (Model != null )
+    {
+        foreach (var item in Model)
+        {
+            <div class="card">
+                <h1>@Html.DisplayFor(modelItem => item.ProductName)</h1>
+                <h4>@Html.DisplayFor(modelItem => item.CategoryName)</h4>
+                <p class="price">$ @Html.DisplayFor(modelItem => item.Price)</p>
+                <p>@Html.DisplayFor(modelItem => item.Description)</p>
+                <p>
+                    @using (Html.BeginForm("PlaceOrder", "Order", new { productId = item.ProductID }, FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("productId", item.ProductID)
+                        @Html.Hidden("quantity", 1)
+                        <input type="submit" value="Buy now" />
+                    }
+                </p>
+
+            </div>
+        }
+    }
+    else
+    {
+        <p>No products found.</p>
+    }
+</div>

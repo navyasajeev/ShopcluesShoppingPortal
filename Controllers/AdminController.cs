@@ -30,24 +30,27 @@ namespace ShopcluesShoppingPortal.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddProductDetails(ProductDetail productDetail)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
+
                     ProductRepository productRepository = new ProductRepository();
                     if (productRepository.AddProduct(productDetail))
                     {
                         ViewBag.Message = "Product details added successfully";
                     }
-                    return RedirectToAction("GetAllProductDetails");
+
 
                 }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("", "Error occurred while saving product: " + ex.Message);
-                }
+                return RedirectToAction("GetAllProductDetails");
             }
-            return View();
+            catch 
+            {
+                return View();
+            }
+            
+            
         }
 
         public ActionResult EditProductDetails(int id)
@@ -58,29 +61,34 @@ namespace ShopcluesShoppingPortal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProductDetails(ProductDetail productDetail)
+        public ActionResult EditProductDetails(int id,ProductDetail productDetail)
         {
-            if (ModelState.IsValid)
-            {
+            
                 try
                 {
-                   
-
                     ProductRepository productRepository = new ProductRepository();
-                    if (productRepository.UpdateProduct(productDetail))
-                    {
-                        return RedirectToAction("GetAllProductDetails");
-                    }
+                productRepository.UpdateProduct(productDetail);
+                    return RedirectToAction("GetAllProductDetails");
+                    
                 }
-                catch (Exception ex)
+                catch 
                 {
-                    ModelState.AddModelError("", "Error occurred while updating product: " + ex.Message);
-                }
+                return View();
             }
-            return View(productDetail);
+            
+            
         }
+        public ActionResult ProductDetails(int id)
+        {
+            ProductRepository productRepository = new ProductRepository();
+            var product = productRepository.GetProductById(id);
 
-        public ActionResult DeleteProductDetails(int id)
+            
+
+            return View(product);
+        
+        }
+    public ActionResult DeleteProductDetails(int id)
         {
             try
             {
@@ -97,6 +105,9 @@ namespace ShopcluesShoppingPortal.Controllers
             }
         }
 
-      
+      public ActionResult Logout()
+        {
+            return RedirectToAction("MainDash", "Home");
+        }
     }
 }

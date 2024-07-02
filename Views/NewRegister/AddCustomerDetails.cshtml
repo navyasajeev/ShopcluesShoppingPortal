@@ -15,9 +15,9 @@
 
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
 
-    <div class="form-group">
+
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.RadioButtonFor(model => model.Gender, "M")
@@ -46,7 +46,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
@@ -54,7 +54,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
@@ -62,7 +62,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
@@ -70,7 +70,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.State, "State", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.State,
@@ -81,7 +81,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.City, "City", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.DropDownListFor(model => model.City,
@@ -92,7 +92,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.EmailAddress, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.EmailAddress, new { htmlAttributes = new { @class = "form-control" } })
@@ -100,7 +100,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group m-2">
         @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
@@ -116,14 +116,15 @@
         </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group p-1 mx-5">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Register" class="btn btn-dark" />
         </div>
     </div>
+    <div>
+        Already have an account? @Html.ActionLink("Login now", "NewLogin", "Home")
+    </div>
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "GetAllCustomers")
-</div>
+

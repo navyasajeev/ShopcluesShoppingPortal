@@ -27,7 +27,7 @@ namespace ShopcluesShoppingPortal.Controllers
         {
             {
                 Repository repository = new Repository();
-                var user = repository.GetCustomerByID(id);
+                var user = repository.GetCustomerByID(id).FirstOrDefault(); ;
                 if (user == null)
                 {
                     // Handle scenario where user with provided id is not found

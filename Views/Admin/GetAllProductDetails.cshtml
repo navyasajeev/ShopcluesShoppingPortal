@@ -27,9 +27,7 @@
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ProductImage)
-        </th>
+       
          <th>
      @Html.DisplayNameFor(model => model.Price)
  </th>
@@ -53,15 +51,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProductImage)
-        </td>
+      
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
             @Html.ActionLink("Edit", "EditProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-success" })
-            @Html.ActionLink("Details", "Details", null, new { id = item.ProductID }, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Details", "ProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-primary" })
             @Html.ActionLink("Delete", "DeleteProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-danger" })
         </td>
     </tr>

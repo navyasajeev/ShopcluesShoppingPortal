@@ -18,6 +18,11 @@ namespace ShopcluesShoppingPortal.Data_Access
             string connectionString = ConfigurationManager.ConnectionStrings["adoConnectionString"].ToString();
             sqlConnection = new SqlConnection(connectionString);
         }
+        /// <summary>
+        /// Insert the details of the user
+        /// </summary>
+        /// <param name="registration"></param>
+        /// <returns></returns>
         public bool InsertUserData(Registration registration)
         {
                 Connection();
@@ -47,14 +52,17 @@ namespace ShopcluesShoppingPortal.Data_Access
             }
 
         }
+        /// <summary>
+        /// Get all the details of the user
+        /// </summary>
+        /// <returns></returns>
         public List<Registration> GetAllUsers()
         {
-            List<Registration> UserList = new List<Registration> ();
-            
+            List<Registration> UserList = new List<Registration> ();            
                 Connection();
                 SqlCommand sqlCommand = new SqlCommand("SPS_GetUserDetails", sqlConnection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-               
+              
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dataTable = new DataTable();
                 sqlConnection.Open();
@@ -79,7 +87,6 @@ namespace ShopcluesShoppingPortal.Data_Access
             return UserList;
         }
         /// <summary>
-        /// 
         /// Get customer details  by id
         /// </summary>
         /// <param name="UserID"></param>
@@ -111,13 +118,18 @@ namespace ShopcluesShoppingPortal.Data_Access
                                     EmailAddress = Convert.ToString(dr["EmailAddress"]),
                                     Password = Convert.ToString(dr["Password"]),
                                     ConfirmPassword = Convert.ToString(dr["ConfirmPassword"]),
-                                }).ToList();
-        
+                                }).ToList();       
             return customerList;
         }
 
-        
-        //Update Customer
+  
+
+
+        /// <summary>
+        /// Update the details of the user
+        /// </summary>
+        /// <param name="registration"></param>
+        /// <returns></returns>
         public bool UpdateCustomerData(Registration registration)
         {
             Connection();
@@ -147,15 +159,17 @@ namespace ShopcluesShoppingPortal.Data_Access
                 return false;
             }
         }
+        /// <summary>
+        /// Deleting the details of the user
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
         public bool DeleteCustomer(int Id)
         {
-
             Connection();
             SqlCommand command = new SqlCommand("SPD_CustomerDetails", sqlConnection);
-
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.AddWithValue("@UserID", Id);
-
             sqlConnection.Open();
             int i = command.ExecuteNonQuery();
             sqlConnection.Close();
@@ -167,11 +181,12 @@ namespace ShopcluesShoppingPortal.Data_Access
             {
                 return false;
             }
-
-
         }
-
-
+        /// <summary>
+        /// get the login details of the user
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns>Boolean</returns>
         public bool LoginDetails(Login login)
         {
             Connection();
@@ -179,9 +194,8 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.Parameters.AddWithValue("@EmailAddress", login.EmailAddress);
             sqlCommand.Parameters.AddWithValue("@Password", login.Password);
-            sqlConnection.Open();
-            
-            bool isValidUser = (bool)sqlCommand.ExecuteScalar(); // Assuming stored procedure returns BIT or BOOLEAN
+            sqlConnection.Open();           
+            bool isValidUser = (bool)sqlCommand.ExecuteScalar(); 
             sqlConnection.Close();
             return isValidUser;
             
@@ -189,6 +203,7 @@ namespace ShopcluesShoppingPortal.Data_Access
 
          
         }
+        
 
 
 
@@ -198,8 +213,24 @@ namespace ShopcluesShoppingPortal.Data_Access
 
 
 
-       
 
+
+
+
+
+
+
+
+
+
+
+
+
+        /// <summary>
+        /// Insert all the details of the user
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         public bool InsertLoginDetails(Login login)
         {
             Connection();
@@ -308,6 +339,8 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlConnection.Close();
             return result;
         }
+    
+
 
     }
 }

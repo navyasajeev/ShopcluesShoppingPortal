@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>GetAllCustomers</h2>
+<h2>All customers</h2>
 
 <p>
-    @Html.ActionLink("Create New Customer", "AddCustomerDetails",null, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create new customer", "AddCustomerDetails",null, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr>
@@ -80,7 +80,8 @@
         </td>
        
         <td>
-            @Html.ActionLink("Edit", "EditCustomerDetails", new {  id=item.UserID  },new { @class = "btn btn-success" }) 
+            @Html.ActionLink("Details", "Details", new { id = item.UserID }, new { @class = "btn btn-primary" })
+
             @Html.ActionLink("Delete", "Delete", new { id = item.UserID }, new { @class = "btn btn-danger" })
         </td>
     </tr>

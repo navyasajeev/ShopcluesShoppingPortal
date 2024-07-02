@@ -28,8 +28,7 @@ namespace ShopcluesShoppingPortal.Models
         [Required(ErrorMessage = "Enter the Created date")]
         public DateTime CreatedDate { get; set; }
 
-        [Required(ErrorMessage = "Upload product image")]
-        public string ProductImage { get; set; }
+      
 
         [Required(ErrorMessage = "Enter the price")]
         public int Price { get; set; }

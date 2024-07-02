@@ -1,18 +1,18 @@
 ﻿@model ShopcluesShoppingPortal.Models.ContactForm
 
 @{
-    ViewBag.Title = "Contactus";
+    ViewBag.Title = "ContactUs";
     Layout = "~/Views/Shared/_View.cshtml";
 }
 
-<h2>Contactus</h2>
-
+<h2>Contact us</h2>
+<div class="about">
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ContactForm</h4>
+       
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -40,9 +40,11 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-offset-2 col-md-10 p-2 mx-5">
                 <input type="submit" value="Send" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
+    </div>
+

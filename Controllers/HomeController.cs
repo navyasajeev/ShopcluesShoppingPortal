@@ -8,6 +8,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using static ShopcluesShoppingPortal.Data_Access.Repository;
+using System.Data.SqlClient;
+using System.Data;
+using System.Configuration;
 
 namespace ShopcluesShoppingPortal.Controllers
 {
@@ -36,6 +39,11 @@ namespace ShopcluesShoppingPortal.Controllers
         {
             return View();
         }
+        public ActionResult UserDashBoard()
+        {
+            var products = productRepository.GetAllProduct();
+            return View(products);
+        }
         public ActionResult MainDash()
         {
 
@@ -50,115 +58,41 @@ namespace ShopcluesShoppingPortal.Controllers
             return View(product);
         }
 
-        [HttpPost]
-        public ActionResult AddToCart(int productId, int quantity)
-        {
-            // Example: Get current user ID (replace with your logic)
-            int userId = 1;
-
-            productRepository.AddToCart(userId, productId, quantity);
-
-            return RedirectToAction("MainDash");
-        }
-
-        [HttpPost]
-        public ActionResult PlaceOrder(List<CartItem> cartItems)
-        {
-            //  Get current user ID 
-            int userId = 1;
-
-            //  Calculate total amount 
-            decimal totalAmount = cartItems.Sum(ci => ci.Quantity * GetProductPrice(ci.ProductID));
-
-            // Set order status 
-            string orderStatus = "Pending";
-
-            productRepository.PlaceOrder(userId, DateTime.Now, totalAmount, orderStatus, cartItems);
-
-            // Clear cart after placing order 
-            // Example: Clear session["Cart"] or delete from CartItems table
-
-            return RedirectToAction("MainDash");
-        }
-
-        // Example: Method to get product price (replace with your logic)
-        private decimal GetProductPrice(int productId)
-        {
-
-           
-                var product = productRepository.GetProductById(productId);
-                if (product != null)
-                {
-                    return product.Price; // Adjust according to your schema
-                }
-                else
-                {
-                    // Handle case where product with given ID is not found
-                    throw new ArgumentException("Product not found for the given ID.");
-                }
-          
-        }
-
-
-
-
-
-
-        public ActionResult Contactus()
+        public ActionResult ContactUs()
         {
             return View();
         }
 
-        // POST: Contact/SendMessage (Handle form submission)
+        // POST: Contact/SendMessage
         [HttpPost]
         [ValidateAntiForgeryToken] // Helps prevent CSRF attacks
-        public ActionResult SendMessage(ContactForm model)
+        public ActionResult ContactUs(ContactForm model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                try
+                if (ModelState.IsValid)
                 {
-                    // Configure and send email
-                    var fromAddress = new MailAddress("your-email@gmail.com", "Your Name");
-                    var toAddress = new MailAddress("recipient@example.com", "Recipient Name");
-                    const string fromPassword = "your-password";
-                    const string subject = "New message from contact form";
-                    string body = $"Name: {model.Name}\n";
-                    body += $"Email: {model.Email}\n";
-                    body += $"Message:\n{model.Message}";
-
-                    var smtp = new SmtpClient
+                    ContactRepository contactRepository = new ContactRepository();
+                    if (contactRepository.SendMessage(model))
                     {
-                        Host = "smtp.gmail.com",
-                        Port = 587,
-                        EnableSsl = true,
-                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                        UseDefaultCredentials = false,
-                        Credentials = new NetworkCredential(fromAddress.Address, fromPassword)
-                    };
-
-                    using (var message = new MailMessage(fromAddress, toAddress)
-                    {
-                        Subject = subject,
-                        Body = body
-                    })
-                    {
-                        smtp.Send(message);
+                        ViewBag.Message = "Your message has been sent successfully.";
+                        return RedirectToAction("ContactUs");
                     }
+                    else
+                    {
+                        ViewBag.ErrorMessage = "Failed to send message. Please try again later.";
+                    }
+                }
 
-                    ViewBag.Message = "Your message has been sent successfully.";
-                    return View("Contactus"); // Redirect to a thank you page or display success message
-                }
-                catch (Exception ex)
-                {
-                    ViewBag.Error = $"Error sending email: {ex.Message}";
-                    return View("Contactus", model); // Return to the form with an error message
-                }
+                // If ModelState is not valid or sending message failed, return to the form view
+                return View("ContactUs", model);
             }
-            else
+            catch (Exception ex)
             {
-                // Model validation failed, return to the form with errors
-                return View("Contactus", model);
+             
+                ViewBag.ErrorMessage = "An error occurred while processing your request.";
+                Console.WriteLine("Error in SendMessage action: " + ex.Message);
+                return View("ContactUs", model);
             }
         }
         [HttpGet]
@@ -171,9 +105,8 @@ namespace ShopcluesShoppingPortal.Controllers
         [HttpPost]
         public ActionResult NewLogin(Login login)
         {
-
-
             Repository repository = new Repository();
+           
             bool isAuthenticated = repository.LoginDetails(login);
             if (login.EmailAddress == "admin@gmail.com" && login.Password == "Admin123")
             {
@@ -181,7 +114,9 @@ namespace ShopcluesShoppingPortal.Controllers
             }
             else if (isAuthenticated)
             {
-                return RedirectToAction("MainDash", "Home"); // Redirect to user dashboard
+                Session["userEmail"] = login.EmailAddress;
+                return RedirectToAction("UserDashBoard", "Home"); // Redirect to user dashboard
+               
             }
             else
             {
