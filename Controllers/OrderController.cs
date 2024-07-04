@@ -17,14 +17,18 @@ namespace ShopcluesShoppingPortal.Controllers
             productRepository = new ProductRepository();
         }
 
-        // GET: Order/Create
+        /// <summary>
+        /// GET: Place an Order 
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns>details of a particular product</returns>
         public ActionResult PlaceOrder(int productId)
         {
             
             var product = productRepository.GetProductById(productId);
             var orderDetail = new OrderDetail
             {
-                ProductID = productId,
+               
                 Product = product,
                 ProductName = product.ProductName, 
                 Quantity = 1, 
@@ -36,21 +40,24 @@ namespace ShopcluesShoppingPortal.Controllers
 
             return View(orderDetail);
         }
-
-        // POST: Order/Create
+        /// <summary>
+        /// Post:Place the order
+        /// </summary>
+        /// <param name="orderDetail"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PlaceOrder(OrderDetail orderDetail)
+        public ActionResult PlaceOrder(OrderDetail orderDetail,int orderid)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    // Save order details to database
+                
                     if (productRepository.AddOrder(orderDetail))
                     {
-                        ViewBag.Message = "Order placed successfully!";
-                        return RedirectToAction("Index", "Home"); // Redirect to home page or order list page
+                        ViewBag.Message = "Order placed successfully!";                     
+                        return RedirectToAction("Message", new { orderId = orderDetail.OrderID });
                     }
                     else
                     {
@@ -58,13 +65,19 @@ namespace ShopcluesShoppingPortal.Controllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch 
             {
                 ViewBag.ErrorMessage = "Error occurred while processing your request.";
             }
-
-            // If ModelState is not valid or if an error occurs, return to form with errors
             return View(orderDetail);
         }
-    }
+        public ActionResult Message(int orderId)
+        {
+            var product = productRepository.GetOrderById(orderId);
+
+            
+
+            return View(product);
+        }
+        }
 }

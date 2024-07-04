@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>ProductDetails</h2>
+<h2>Product Details</h2>
 
 <div>
-    <h4>ProductDetail</h4>
+ 
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -57,6 +57,13 @@
 
         <dd>
             @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ProductImage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProductImage)
         </dd>
 
     </dl>

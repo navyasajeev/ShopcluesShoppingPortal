@@ -12,13 +12,16 @@ namespace ShopcluesShoppingPortal.Data_Access
     public class ContactRepository
     { 
             private SqlConnection sqlConnection;
-
             private void Connection()
             {
                 string connectionString = ConfigurationManager.ConnectionStrings["adoConnectionString"].ToString();
                 sqlConnection = new SqlConnection(connectionString);
             }
-
+        /// <summary>
+        /// Add the details of a contact form
+        /// </summary>
+        /// <param name="contactForm"></param>
+        /// <returns></returns>
             public bool SendMessage(ContactForm contactForm)
             {
                 try

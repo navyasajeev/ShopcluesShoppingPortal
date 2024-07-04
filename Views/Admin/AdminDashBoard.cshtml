@@ -31,8 +31,8 @@
     
         <img src="~/Content/Images/pexels-wdnet-230544.jpg" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">Payment details</h5>
-            <a href="#" class="btn btn-primary">Go</a>
+            <h5 class="card-title">Order details</h5>
+            @Html.ActionLink("Get details", "GetAllOrderDetails", "Admin", null, new { @class = "btn btn-primary" })
 
         </div>
     </div>

@@ -130,11 +130,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactForm.cs" />
-    <Compile Include="Models\Order.cs" />
     <Compile Include="Models\OrderDetail.cs" />
-    <Compile Include="Models\OrderItem.cs" />
     <Compile Include="Models\ProductDetail.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\Registration.cs" />
@@ -164,6 +161,9 @@
     <Content Include="Content\CSS\Image carousel.css" />
     <Content Include="Content\CSS\LoginStyle.css" />
     <Content Include="Content\CSS\NavbarStyle.css" />
+    <Content Include="Content\CSS\OrderConfirmationStyle.css" />
+    <Content Include="Content\CSS\PlaceOrderStyle.css" />
+    <Content Include="Content\CSS\RegistrationStyle.css" />
     <Content Include="Content\Images\aboutus.jpg" />
     <Content Include="Content\Images\pexels-olly-1050244.jpg" />
     <Content Include="Content\Images\pexels-olly-974911.jpg" />
@@ -179,6 +179,8 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Scripts\Custom JS\DateValidation.js" />
+    <Content Include="Scripts\Custom JS\DisableBrowserBack.js" />
     <Content Include="Scripts\Custom JS\Image Carousel.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
@@ -210,9 +212,6 @@
     <Content Include="Views\Home\Delete.cshtml" />
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\AdminDashBoard.cshtml" />
-    <Content Include="Views\Admin\AddProductDetails.cshtml" />
-    <Content Include="Views\Admin\EditProductDetails.cshtml" />
-    <Content Include="Views\Admin\GetAllProductDetails.cshtml" />
     <Content Include="Views\Shared\_View.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
@@ -222,16 +221,22 @@
     <Content Include="Views\NewRegister\Details.cshtml" />
     <Content Include="Views\Home\NewLogin.cshtml" />
     <Content Include="Views\Home\MainDash.cshtml" />
-    <Content Include="Views\Admin\DeleteProductDetails.cshtml" />
     <Content Include="Views\Admin\ProductDetails.cshtml" />
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Shared\_UserView.cshtml" />
     <Content Include="Views\Home\UserDashBoard.cshtml" />
     <Content Include="Views\Home\AddToCart.cshtml" />
     <Content Include="Views\Order\PlaceOrder.cshtml" />
+    <Content Include="Views\Admin\GetAllProductDetails.cshtml" />
+    <Content Include="Views\Admin\DeleteProductDetails.cshtml" />
+    <Content Include="Views\Admin\AddProductDetails.cshtml" />
+    <Content Include="Views\Admin\EditProductDetails.cshtml" />
+    <Content Include="Views\Admin\GetAllOrderDetails.cshtml" />
+    <Content Include="Views\Admin\OrderDetails.cshtml" />
+    <Content Include="Views\Order\Message.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
+    <Folder Include="App_Data\File\" />
     <Folder Include="ProductImages\" />
     <Folder Include="Uploads\" />
     <Folder Include="Views\User\" />

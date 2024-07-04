@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Configuration;
 using ShopcluesShoppingPortal.Models;
+using System.IO;
 
 namespace ShopcluesShoppingPortal.Data_Access
 {
@@ -23,19 +24,21 @@ namespace ShopcluesShoppingPortal.Data_Access
         /// </summary>
         /// <param name="productDetail"></param>
         /// <returns></returns>
-        public bool AddProduct(ProductDetail productDetail)
+        public bool AddProduct(ProductDetail productDetail, HttpPostedFileBase file)
         {
 
             Connection();
             SqlCommand sqlCommand = new SqlCommand("SP_AddNewProductDetails", sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlConnection.Open();
             sqlCommand.Parameters.AddWithValue("@ProductName", productDetail.ProductName);
             sqlCommand.Parameters.AddWithValue("@CategoryName", productDetail.CategoryName);
             sqlCommand.Parameters.AddWithValue("@Description", productDetail.Description);
             sqlCommand.Parameters.AddWithValue("@Stock", productDetail.Stock);
             sqlCommand.Parameters.AddWithValue("@CreatedDate", productDetail.CreatedDate);
             sqlCommand.Parameters.AddWithValue("@Price", productDetail.Price);
-            sqlConnection.Open();
+            sqlCommand.Parameters.AddWithValue("@ProductImage", productDetail.ProductImage);
+            
             int i = sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
             if (i >= 1)
@@ -71,7 +74,8 @@ namespace ShopcluesShoppingPortal.Data_Access
                                Description = Convert.ToString(dr["Description"]),
                                Stock = Convert.ToInt32(dr["Stock"]),
                                CreatedDate = Convert.ToDateTime(dr["CreatedDate"]),
-                               Price = Convert.ToInt32(dr["Price"])
+                               Price = Convert.ToInt32(dr["Price"]),
+                               ProductImage = Convert.ToString(dr["ProductImage"]),
                            }).ToList();
             return ProductList;
 
@@ -105,7 +109,8 @@ namespace ShopcluesShoppingPortal.Data_Access
                     Description = Convert.ToString(row["Description"]),
                     Stock = Convert.ToInt32(row["Stock"]),
                     CreatedDate = Convert.ToDateTime(row["CreatedDate"]),
-                    Price = Convert.ToInt32(row["Price"])
+                    Price = Convert.ToInt32(row["Price"]),
+                    ProductImage = Convert.ToString(row["ProductImage"]),
                 };
 
             }
@@ -130,6 +135,8 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlCommand.Parameters.AddWithValue("@Stock", productDetail.Stock);
             sqlCommand.Parameters.AddWithValue("@CreatedDate", productDetail.CreatedDate);
             sqlCommand.Parameters.AddWithValue("@Price", productDetail.Price);
+            sqlCommand.Parameters.AddWithValue("@ProductImage", productDetail.ProductImage);
+
             sqlConnection.Open();
             int id = sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
@@ -165,16 +172,17 @@ namespace ShopcluesShoppingPortal.Data_Access
                 return false;
             }
         }
-
-      
-
-        // Method to add a new order
+       /// <summary>
+       /// Method to add a new order
+       /// </summary>
+       /// <param name="orderDetail"></param>
+       /// <returns></returns>
         public bool AddOrder(OrderDetail orderDetail)
         {
             Connection();
             SqlCommand sqlCommand = new SqlCommand("SP_AddNewOrder", sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
-            sqlCommand.Parameters.AddWithValue("@ProductID", orderDetail.ProductID);
+            sqlCommand.Parameters.AddWithValue("@ProductName", orderDetail.ProductName);
             sqlCommand.Parameters.AddWithValue("@Quantity", orderDetail.Quantity);
             sqlCommand.Parameters.AddWithValue("@EmailAddress", orderDetail.EmailAddress);
             sqlCommand.Parameters.AddWithValue("@OrderDate", orderDetail.OrderDate);
@@ -187,12 +195,82 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlConnection.Close();
             if (id > 0)
             {
+                orderDetail.OrderID = id;
                 return true;
             }
             else
             {
                 return false;
             }
+        }
+        /// <summary>
+        /// Method to get the details of all orders
+        /// </summary>
+        /// <returns></returns>
+        public List<OrderDetail> GetAllOrder()
+        {
+            Connection();
+            List<OrderDetail> ProductList = new List<OrderDetail>();
+            SqlCommand sqlCommand = new SqlCommand("SP_GetOrders", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+            DataTable dataTable = new DataTable();
+            sqlConnection.Open();
+            sqlDataAdapter.Fill(dataTable);
+            sqlConnection.Close();
+            ProductList = (from DataRow dr in dataTable.Rows
+                           select new OrderDetail()
+                           {
+                               OrderID = Convert.ToInt32(dr["OrderID"]),
+                               ProductName = Convert.ToString(dr["ProductName"]),
+                               Quantity = Convert.ToInt32(dr["Quantity"]),
+                               EmailAddress = Convert.ToString(dr["EmailAddress"]),
+                               OrderDate= Convert.ToDateTime(dr["OrderDate"]),
+                               TotalAmount = Convert.ToInt32(dr["TotalAmount"]),
+                               Address = Convert.ToString(dr["Address"]),
+                               Pincode = Convert.ToInt32(dr["Pincode"]),
+                               PhoneNumber= Convert.ToInt32(dr["PhoneNumber"])
+
+                           }).ToList();
+            return ProductList;
+
+        }
+        /// <summary>
+        /// Method to get the details of a particular product
+        /// </summary>
+        /// <param name="orderID"></param>
+        /// <returns></returns>
+        public OrderDetail GetOrderById(int orderID)
+        {
+            OrderDetail order = null;
+            Connection();
+            SqlCommand sqlCommand = new SqlCommand("SPS_GetOrderByID", sqlConnection);
+            sqlCommand.CommandType = CommandType.StoredProcedure;
+            sqlCommand.Parameters.AddWithValue("@OrderID", orderID);
+            SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
+            DataTable dataTable = new DataTable();
+            sqlConnection.Open();
+            sqlDataAdapter.Fill(dataTable);
+            sqlConnection.Close();
+
+            if (dataTable.Rows.Count > 0)
+            {
+                DataRow row = dataTable.Rows[0];
+                order = new OrderDetail
+                {
+                    OrderID = Convert.ToInt32(row["OrderID"]),
+                    ProductName = Convert.ToString(row["ProductName"]),
+                    Quantity = Convert.ToInt32(row["Quantity"]),
+                    EmailAddress = Convert.ToString(row["EmailAddress"]),
+                    OrderDate = Convert.ToDateTime(row["OrderDate"]),
+                    TotalAmount = Convert.ToInt32(row["TotalAmount"]),
+                    Address = Convert.ToString(row["Address"]),
+                    Pincode = Convert.ToInt32(row["Pincode"]),
+                    PhoneNumber = Convert.ToInt32(row["PhoneNumber"])
+                };
+
+            }
+            return order;
         }
     }
 }

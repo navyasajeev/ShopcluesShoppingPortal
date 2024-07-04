@@ -18,9 +18,9 @@
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Welcome Admin!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("Welcome admin@gmail.com!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
-       
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -32,13 +32,13 @@
                         @Html.ActionLink("Dashboard", "AdminDashBoard", new { area = "" }, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Product details", "GetAllProductDetails","Admin", new { area = "" }, new { @class = "nav-link" })
+                        @Html.ActionLink("Product details", "GetAllProductDetails", "Admin", new { area = "" }, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("Customer details", "GetAllCustomers", "NewRegister", new { area = "" }, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("Payment details", "GetAllProductDetails", null, new { area = "" }, new { @class = "nav-link" })
+                        @Html.ActionLink("Order details", "GetAllOrderDetails", "Admin", new { area = "" }, new { @class = "nav-link" })
                     </li>
                     <li class="nav-item">
                         @Html.ActionLink("logout", "Logout", "Admin", new { area = "" }, new { @class = "nav-link" })
@@ -52,11 +52,12 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Shopclues.com</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/Custom JS/DisableBrowserBack.js"></script>
 
     @RenderSection("scripts", required: false)
 </body>

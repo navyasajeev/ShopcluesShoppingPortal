@@ -5,10 +5,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>All product details</h2>
+<h2>All Product Details</h2>
 
 <p>
     @Html.ActionLink("Create new product", "AddProductDetails", null, new { @class = "btn btn-primary" })
+
 </p>
 <table class="table">
     <tr>
@@ -27,10 +28,12 @@
         <th>
             @Html.DisplayNameFor(model => model.CreatedDate)
         </th>
-       
-         <th>
-     @Html.DisplayNameFor(model => model.Price)
- </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductImage)
+        </th>
         <th></th>
     </tr>
 
@@ -51,15 +54,17 @@
         <td>
             @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
-      
         <td>
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.ActionLink("Edit", "EditProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-success" })
-            @Html.ActionLink("Details", "ProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-primary" })
-            @Html.ActionLink("Delete", "DeleteProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-danger" })
+            @Html.DisplayFor(modelItem => item.ProductImage)
         </td>
+         <td>
+     @Html.ActionLink("Edit", "EditProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-success" })
+     @Html.ActionLink("Details", "ProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-primary" })
+     @Html.ActionLink("Delete", "DeleteProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-danger" })
+ </td>   
     </tr>
 }
 

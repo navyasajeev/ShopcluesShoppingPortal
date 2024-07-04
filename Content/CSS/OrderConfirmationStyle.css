@@ -1,0 +1,47 @@
+﻿.card {
+    background-color: #f8f9fa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+    .card h3 {
+        color: #333;
+    }
+
+    .card h6 {
+        color: #666;
+    }
+
+.dl-horizontal {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+    .dl-horizontal dt,
+    .dl-horizontal dd {
+        flex: 0 0 auto;
+        width: 50%; /* Adjust width as needed */
+        white-space: nowrap;
+        margin-bottom: 10px; /* Adjust vertical spacing between pairs */
+    }
+
+    .dl-horizontal dt {
+        font-weight: bold;
+    }
+
+.card p {
+    margin-top: 15px;
+    color: #888;
+}
+
+.card a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+    .card a:hover {
+        text-decoration: underline;
+    }

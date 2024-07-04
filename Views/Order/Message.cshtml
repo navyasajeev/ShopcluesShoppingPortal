@@ -1,0 +1,83 @@
+﻿@model ShopcluesShoppingPortal.Models.OrderDetail
+
+@{
+    ViewBag.Title = "Message";
+    Layout = "~/Views/Shared/_UserView.cshtml";
+}
+<link href="~/Content/CSS/OrderConfirmationStyle.css" rel="stylesheet" />
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            
+            <div class="card">
+                <h3>We have received your order!</h3>
+                <h6>Thanks for shopping with Shopclues! Take a look below for all the confirmation details you'll need.</h6>
+                <hr />
+                <dl class="dl-horizontal">
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OrderID)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OrderID)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.ProductName)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.ProductName)
+                    </dd>
+                    <dt>
+                        @Html.DisplayNameFor(model => model.EmailAddress)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.EmailAddress)
+                    </dd>
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.TotalAmount)
+                    </dt>
+                    <dd>
+                        $ @Html.DisplayFor(model => model.TotalAmount)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.OrderDate)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.OrderDate)
+                    </dd>
+
+
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Address)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Address)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Pincode)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.Pincode)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </dt>
+                    <dd>
+                        @Html.DisplayFor(model => model.PhoneNumber)
+                    </dd>
+                </dl>
+
+                <p>Cash on delivery! Thanks again, See you soon!!</p>
+
+                <p><a href="@Url.Action("UserDashBoard", "Home")">Go to home</a></p>
+            </div>
+        </div>
+    </div>
+</div>

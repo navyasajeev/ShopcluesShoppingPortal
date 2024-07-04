@@ -121,10 +121,6 @@ namespace ShopcluesShoppingPortal.Data_Access
                                 }).ToList();       
             return customerList;
         }
-
-  
-
-
         /// <summary>
         /// Update the details of the user
         /// </summary>
@@ -198,10 +194,7 @@ namespace ShopcluesShoppingPortal.Data_Access
             bool isValidUser = (bool)sqlCommand.ExecuteScalar(); 
             sqlConnection.Close();
             return isValidUser;
-            
-          
-
-         
+                     
         }
         
 

@@ -10,7 +10,10 @@ namespace ShopcluesShoppingPortal.Controllers
 {
     public class NewRegisterController : Controller
     {
-        // GET: NewRegister
+        /// <summary>
+        /// GET:Get the details of all new registered customer
+        /// </summary>
+        /// <returns>list</returns>
         public ActionResult GetAllCustomers()
         {
             Repository repository = new Repository();
@@ -22,7 +25,11 @@ namespace ShopcluesShoppingPortal.Controllers
             return View(UserList);
         }
 
-        // GET: NewRegister/Details/5
+        /// <summary>
+        /// GET: NewRegister/Details- Details of a particular customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>list</returns>
         public ActionResult Details(int id)
         {
             {
@@ -39,7 +46,10 @@ namespace ShopcluesShoppingPortal.Controllers
             }
         }
 
-        // GET: Employee/AddEmployeeDetails
+        /// <summary>
+        /// GET: add new customer
+        /// </summary>
+        /// <returns></returns>
         public ActionResult AddCustomerDetails()
         {
             ViewBag.States = GetStates();
@@ -47,9 +57,11 @@ namespace ShopcluesShoppingPortal.Controllers
             return View();
         }
       
-
-
-        // POST: Employee/AddEmployeeDetails
+        /// <summary>
+        /// POST: Customer/Add a new customer Details
+        /// </summary>
+        /// <param name="registration"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult AddCustomerDetails(Registration registration)
         {
@@ -74,25 +86,11 @@ namespace ShopcluesShoppingPortal.Controllers
                 return View(registration);
             }
         }
-
-        // GET: NewRegister/Edit/5
-        /*public ActionResult EditCustomerDetails(int id)
-                {
-                    Repository repository = new Repository();
-                    var customer = repository.GetCustomersByID(id).FirstOrDefault();
-                    if (customer == null)
-                    {
-                        ViewBag.Message = "Customer not available with ID" + id.ToString();
-                        return RedirectToAction("GetAllCustomers");
-                    }
-                    ViewBag.States = GetStates(); // Populate states dropdown
-                    ViewBag.Cities = GetCities();
-
-                    return View(customer);
-                }
-        */
-
-
+        /// <summary>
+        /// Get: get  a particular customer details for edit
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult EditCustomerDetails(int id)
         {
             Repository repository = new Repository();
@@ -109,7 +107,13 @@ namespace ShopcluesShoppingPortal.Controllers
 
             return View(customer);
         }
-            // POST: NewRegister/Edit/5
+        /// <summary>
+        /// POST: edit a particular customer details
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="registration"></param>
+        /// <returns></returns>
+            
             [HttpPost]
         public ActionResult EditCustomerDetails(int id, Registration registration)
         {
@@ -124,11 +128,7 @@ namespace ShopcluesShoppingPortal.Controllers
                     return View(registration);
                 }
                 return View(registration);
-            }
-                // TODO: Add update logic here
-
-
-            
+            }        
             catch (Exception exception)
             {
 
@@ -136,6 +136,11 @@ namespace ShopcluesShoppingPortal.Controllers
                 return View();
             }
         }
+        /// <summary>
+        /// Delete a customer details by using its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult Delete(int id)
         {
             try
@@ -154,7 +159,6 @@ namespace ShopcluesShoppingPortal.Controllers
                 return View();
             }
         }
-           // POST: NewRegister/Delete/5
         private List<SelectListItem> GetStates()
         {
             return new List<SelectListItem>

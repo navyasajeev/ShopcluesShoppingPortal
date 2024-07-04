@@ -8,7 +8,6 @@ namespace ShopcluesShoppingPortal.Models
 {
     public class Registration
     {
-
         public int UserID { get; set; }
 
         [Required(ErrorMessage = "Enter first name")]

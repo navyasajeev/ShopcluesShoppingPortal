@@ -4,6 +4,7 @@
     ViewBag.Title = "UserDashBoard";
     Layout = "~/Views/Shared/_UserView.cshtml";
 }
+
 <link href="~/Content/CSS/CardStyle.css" rel="stylesheet" />
 @{
     string userEmail = Session["userEmail"] as string;
@@ -16,21 +17,19 @@
         foreach (var item in Model)
         {
             <div class="card">
+                <div><img src="@Url.Content(item.ProductImage)" style="max-width:100%;max-height:100%" /></div>
+
                 <h1>@Html.DisplayFor(modelItem => item.ProductName)</h1>
                 <h4>@Html.DisplayFor(modelItem => item.CategoryName)</h4>
                 <p class="price">$ @Html.DisplayFor(modelItem => item.Price)</p>
                 <p>@Html.DisplayFor(modelItem => item.Description)</p>
                 <p>
-                    @using (Html.BeginForm("PlaceOrder", "Order", new { productId = item.ProductID }, FormMethod.Post))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.Hidden("productId", item.ProductID)
-                        @Html.Hidden("quantity", 1)
-                        <input type="submit" value="Buy now" />
-                    }
-                </p>
 
-            </div>
+                    <p><a href="@Url.Action("PlaceOrder", "Order", new { productId = item.ProductID })">Buy now</a></p>
+                
+                    </p>
+
+                </div>
         }
     }
     else

@@ -21,7 +21,10 @@ namespace ShopcluesShoppingPortal.Controllers
         {
             return View();
         }
-
+        /// <summary>
+        /// About us page
+        /// </summary>
+        /// <returns></returns>
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -39,6 +42,10 @@ namespace ShopcluesShoppingPortal.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// display all product in the user dashboard
+        /// </summary>
+        /// <returns></returns>
         public ActionResult UserDashBoard()
         {
             var products = productRepository.GetAllProduct();
@@ -52,6 +59,11 @@ namespace ShopcluesShoppingPortal.Controllers
             return View(products);
             
         }
+        /// <summary>
+        /// Get the details of a product by using its id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult ProductDetails(int id)
         {
             var product = productRepository.GetProductById(id);
@@ -63,9 +75,13 @@ namespace ShopcluesShoppingPortal.Controllers
             return View();
         }
 
-        // POST: Contact/SendMessage
+        /// <summary>
+        /// POST: Contact/SendMessage
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
-        [ValidateAntiForgeryToken] // Helps prevent CSRF attacks
+        [ValidateAntiForgeryToken] 
         public ActionResult ContactUs(ContactForm model)
         {
             try
@@ -83,8 +99,6 @@ namespace ShopcluesShoppingPortal.Controllers
                         ViewBag.ErrorMessage = "Failed to send message. Please try again later.";
                     }
                 }
-
-                // If ModelState is not valid or sending message failed, return to the form view
                 return View("ContactUs", model);
             }
             catch (Exception ex)
@@ -95,13 +109,21 @@ namespace ShopcluesShoppingPortal.Controllers
                 return View("ContactUs", model);
             }
         }
+        /// <summary>
+        ///Get the Login details
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult NewLogin()
         {
 
             return View();
         }
-
+        /// <summary>
+        /// Post:new login
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult NewLogin(Login login)
         {
@@ -110,18 +132,18 @@ namespace ShopcluesShoppingPortal.Controllers
             bool isAuthenticated = repository.LoginDetails(login);
             if (login.EmailAddress == "admin@gmail.com" && login.Password == "Admin123")
             {
-                return RedirectToAction("AdminDashBoard", "Admin"); // Redirect to admin dashboard
+                return RedirectToAction("AdminDashBoard", "Admin"); 
             }
             else if (isAuthenticated)
             {
                 Session["userEmail"] = login.EmailAddress;
-                return RedirectToAction("UserDashBoard", "Home"); // Redirect to user dashboard
+                return RedirectToAction("UserDashBoard", "Home"); 
                
             }
             else
             {
-                ModelState.AddModelError("", "Invalid username or password."); // Add error message if login fails
-                return View("NewLogin", login); // Return to login page with errors
+                ModelState.AddModelError("", "Invalid username or password."); 
+                return View("NewLogin", login); 
             }
         }
 

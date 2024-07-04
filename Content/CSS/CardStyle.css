@@ -1,16 +1,18 @@
-﻿.about{
-    justify-items:center;
-    padding:15px 15px 15px 15px;
-    margin:4px 7px 2px 4px;
+﻿.about {
+    display: flex; /* Use flexbox to arrange items */
+    flex-wrap: wrap; /* Allow items to wrap to the next line if needed */
+    justify-content: center; /* Center items horizontally */
+    padding: 15px; /* Adjust padding as needed */
+    margin: 4px 7px 2px 4px; /* Adjust margins as needed */
 }
 
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
-    margin: auto;
+    margin: 10px; /* Adjust margin between cards */
     text-align: center;
     font-family: arial;
-   
+    flex: 1 0 300px; /* Flex properties to control item sizing */
 }
 
 .price {
@@ -18,7 +20,7 @@
     font-size: 22px;
 }
 
-.card button {
+.card a {
     border: none;
     outline: 0;
     padding: 12px;
@@ -30,6 +32,6 @@
     font-size: 18px;
 }
 
-    .card button:hover {
-        opacity: 0.7;
-    }
+.card a:hover {
+    opacity: 0.7;
+}
