@@ -5,9 +5,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.IO;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace ShopcluesShoppingPortal.Controllers
 {
@@ -30,6 +32,7 @@ namespace ShopcluesShoppingPortal.Controllers
         public ActionResult GetAllProductDetails()
         {
             ProductRepository productRepository = new ProductRepository();
+           
             ModelState.Clear();
             return View(productRepository.GetAllProduct());
         }
@@ -39,6 +42,7 @@ namespace ShopcluesShoppingPortal.Controllers
         /// <returns></returns>
         public ActionResult AddProductDetails()
         {
+            ViewBag.Categories = GetCategories();
             return View();
         }
         /// <summary>
@@ -52,27 +56,42 @@ namespace ShopcluesShoppingPortal.Controllers
         [ValidateAntiForgeryToken]      
         public ActionResult AddProductDetails(ProductDetail productDetail,HttpPostedFileBase file)
         {
-            Connection();
-            SqlCommand sqlCommand = new SqlCommand("SP_AddNewProductDetails", sqlConnection);
-            sqlCommand.CommandType = CommandType.StoredProcedure;
-            sqlConnection.Open();
-            sqlCommand.Parameters.AddWithValue("@ProductName", productDetail.ProductName);
-            sqlCommand.Parameters.AddWithValue("@CategoryName", productDetail.CategoryName);
-            sqlCommand.Parameters.AddWithValue("@Description", productDetail.Description);
-            sqlCommand.Parameters.AddWithValue("@Stock", productDetail.Stock);
-            sqlCommand.Parameters.AddWithValue("@CreatedDate", productDetail.CreatedDate);
-            sqlCommand.Parameters.AddWithValue("@Price", productDetail.Price);
-            if(file!=null &&file.ContentLength>0)
+            try
             {
-                string filename = Path.GetFileName(file.FileName);
-                string imgpath = Path.Combine(Server.MapPath("~/ProductImages/"), filename);
-                file.SaveAs(imgpath);
+                Connection();
+                ViewBag.Categories = GetCategories();
+                SqlCommand sqlCommand = new SqlCommand("SP_AddNewProductDetails", sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
+                sqlConnection.Open();
+                sqlCommand.Parameters.AddWithValue("@ProductName", productDetail.ProductName);
+                sqlCommand.Parameters.AddWithValue("@CategoryName", productDetail.CategoryName);
+                sqlCommand.Parameters.AddWithValue("@Description", productDetail.Description);
+                sqlCommand.Parameters.AddWithValue("@Stock", productDetail.Stock);
+                productDetail.CreatedDate = DateTime.Now; 
+                sqlCommand.Parameters.AddWithValue("@CreatedDate", productDetail.CreatedDate);
+                sqlCommand.Parameters.AddWithValue("@Price", productDetail.Price);
+                if (file != null && file.ContentLength > 0)
+                {
+                    string filename = Path.GetFileName(file.FileName);
+                    string imgpath = Path.Combine(Server.MapPath("~/ProductImages/"), filename);
+                    file.SaveAs(imgpath);
+                    sqlCommand.Parameters.AddWithValue("@ProductImage", "~/ProductImages/" + filename);
+                }
+                else
+                {
+                    sqlCommand.Parameters.AddWithValue("@ProductImage", DBNull.Value); // Set parameter to DBNull.Value
+                }
+                sqlCommand.ExecuteNonQuery();
+
+                ModelState.Clear();
+                ViewData["Message"] = "Product details " + productDetail.ProductName + " is saved successfully";
             }
-            sqlCommand.Parameters.AddWithValue("@ProductImage", "~/ProductImages/" + file.FileName);
-            sqlCommand.ExecuteNonQuery();
-            sqlConnection.Close();
-            ModelState.Clear();
-            ViewData["Message"] = "Product details " + productDetail.ProductName + " is saved successfully";
+            catch 
+            {
+                // Log the exception or handle it as needed
+               // ViewData["Message"] = "Error: " + ex.Message;
+                sqlConnection.Close();
+            }
             return View();
             
         }
@@ -84,9 +103,10 @@ namespace ShopcluesShoppingPortal.Controllers
         public ActionResult EditProductDetails(int id)
         {
             ProductRepository productRepository = new ProductRepository();
-
-            return View(productRepository.GetAllProduct().Find(productDetail => productDetail.ProductID == id));
-           
+            ViewBag.Categories = GetCategories(); // Make sure this method returns List<SelectListItem>
+            var product = productRepository.GetProductById(id);
+          
+            return View(product);
         }
         /// <summary>
         /// Post:Edit the particular details of a product
@@ -104,8 +124,9 @@ namespace ShopcluesShoppingPortal.Controllers
                 try
                 {
                     ProductRepository productRepository = new ProductRepository();
-                        productRepository.UpdateProduct(productDetail);
-                        if (file != null && file.ContentLength > 0)
+                    ViewBag.Categories = GetCategories();
+                    productRepository.UpdateProduct(productDetail);
+                    if (file != null && file.ContentLength > 0)
                         {
                             string filename = Path.GetFileName(file.FileName);
                             string imgpath = Path.Combine(Server.MapPath("~/ProductImages/"), filename);
@@ -123,6 +144,7 @@ namespace ShopcluesShoppingPortal.Controllers
             }
             else
             {
+                ViewBag.Categories = GetCategories();
                 return View(productDetail); 
             }
         }
@@ -195,6 +217,16 @@ namespace ShopcluesShoppingPortal.Controllers
 
             return View(product);
 
+        }
+        private List<SelectListItem> GetCategories()
+        {
+            return new List<SelectListItem>
+{
+    new SelectListItem { Value = "Electronics", Text = "Electronics" },
+    new SelectListItem { Value = "Clothings", Text = "Clothings" },
+    new SelectListItem { Value = "Vegetables", Text = "Vegetables" },
+    new SelectListItem { Value = "Fruits", Text = "Fruits" },
+};
         }
     }
 }

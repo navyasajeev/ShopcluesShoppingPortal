@@ -120,6 +120,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Common\Password.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\NewRegisterController.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\ContactForm.cs" />
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\ProductDetail.cs" />
@@ -155,7 +157,9 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\CSS\AboutusStyle.css" />
+    <Content Include="Content\CSS\AdminStyle.css" />
     <Content Include="Content\CSS\CardStyle.css" />
+    <Content Include="Content\CSS\ContactStyleSheet.css" />
     <Content Include="Content\CSS\ContactusStyle.css" />
     <Content Include="Content\CSS\footer.css" />
     <Content Include="Content\CSS\Image carousel.css" />
@@ -164,7 +168,9 @@
     <Content Include="Content\CSS\OrderConfirmationStyle.css" />
     <Content Include="Content\CSS\PlaceOrderStyle.css" />
     <Content Include="Content\CSS\RegistrationStyle.css" />
+    <Content Include="Content\Images\2.jpg" />
     <Content Include="Content\Images\aboutus.jpg" />
+    <Content Include="Content\Images\contact.jpg" />
     <Content Include="Content\Images\pexels-olly-1050244.jpg" />
     <Content Include="Content\Images\pexels-olly-974911.jpg" />
     <Content Include="Content\Images\pexels-wdnet-230544.jpg" />
@@ -182,6 +188,7 @@
     <Content Include="Scripts\Custom JS\DateValidation.js" />
     <Content Include="Scripts\Custom JS\DisableBrowserBack.js" />
     <Content Include="Scripts\Custom JS\Image Carousel.js" />
+    <Content Include="Scripts\Custom JS\RegistrationValidation.js" />
     <Content Include="Scripts\jquery-3.7.0.js" />
     <Content Include="Scripts\jquery-3.7.0.min.js" />
     <Content Include="Scripts\jquery-3.7.0.slim.js" />
@@ -214,7 +221,6 @@
     <Content Include="Views\Admin\AdminDashBoard.cshtml" />
     <Content Include="Views\Shared\_View.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\NewRegister\AddCustomerDetails.cshtml" />
     <Content Include="Views\NewRegister\EditCustomerDetails.cshtml" />
     <Content Include="Views\NewRegister\GetAllCustomers.cshtml" />
@@ -225,7 +231,6 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Shared\_UserView.cshtml" />
     <Content Include="Views\Home\UserDashBoard.cshtml" />
-    <Content Include="Views\Home\AddToCart.cshtml" />
     <Content Include="Views\Order\PlaceOrder.cshtml" />
     <Content Include="Views\Admin\GetAllProductDetails.cshtml" />
     <Content Include="Views\Admin\DeleteProductDetails.cshtml" />
@@ -234,6 +239,12 @@
     <Content Include="Views\Admin\GetAllOrderDetails.cshtml" />
     <Content Include="Views\Admin\OrderDetails.cshtml" />
     <Content Include="Views\Order\Message.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\cart.cshtml" />
+    <Content Include="Views\Home\CartDetails.cshtml" />
+    <Content Include="Views\Home\PlaceOrderForm.cshtml" />
+    <Content Include="Views\Home\ConfirmMessage.cshtml" />
+    <Content Include="Views\Home\OrderHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\File\" />

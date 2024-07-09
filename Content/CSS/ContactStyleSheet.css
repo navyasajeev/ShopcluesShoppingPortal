@@ -1,0 +1,31 @@
+﻿/* Style for the contact form container */
+.contact-form-container {
+    max-width: 600px; /* Limit width of the form container */
+    margin: 30px auto; /* Center align horizontally */
+    background-color: #93d2d1; /* Background color */
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.1); /* Optional box shadow for styling */
+    margin-top: 150px;
+}
+
+    .contact-form-container h2 {
+        color: #333; /* Heading color */
+        text-align: center; /* Center align heading */
+    }
+
+    .contact-form-container .form-horizontal {
+        margin-top: 10px; /* Space between heading and form */
+    }
+
+    .contact-form-container .form-group {
+        margin-bottom: 15px; /* Space between form groups */
+        margin-left: 30px;
+        justify-content: center;
+    }
+        
+        .contact-form-container .btn-default {
+            width: 100%; /* Make button full width */
+            justify-content: center;
+        }

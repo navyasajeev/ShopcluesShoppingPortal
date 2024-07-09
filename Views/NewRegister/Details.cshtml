@@ -90,25 +90,12 @@
             @Html.DisplayFor(model => model.EmailAddress)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Password)
-        </dt>
+       
 
-        <dd>
-            @Html.DisplayFor(model => model.Password)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ConfirmPassword)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ConfirmPassword)
-        </dd>
-
+       
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "EditCustomerDetails", new { id = Model.UserID }) |
+    
     @Html.ActionLink("Back to List", "GetAllCustomers")
 </p>

@@ -7,18 +7,21 @@ using System.Web;
 using System.Configuration;
 using ShopcluesShoppingPortal.Models;
 using System.IO;
+using System.Web.Mvc;
+using System.Web.UI.WebControls;
 
 namespace ShopcluesShoppingPortal.Data_Access
 {
     public class ProductRepository
     {
         private SqlConnection sqlConnection;
-
+        private static List<OrderDetail> OrderHistory = new List<OrderDetail>();
         private void Connection()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["adoConnectionString"].ToString();
             sqlConnection = new SqlConnection(connectionString);
         }
+        
         /// <summary>
         /// Add new Product
         /// </summary>
@@ -97,10 +100,11 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlConnection.Open();
             sqlDataAdapter.Fill(dataTable);
             sqlConnection.Close();
-
+          
             if (dataTable.Rows.Count > 0)
             {
                 DataRow row = dataTable.Rows[0];
+
                 product = new ProductDetail
                 {
                     ProductID = Convert.ToInt32(row["ProductID"]),
@@ -112,7 +116,7 @@ namespace ShopcluesShoppingPortal.Data_Access
                     Price = Convert.ToInt32(row["Price"]),
                     ProductImage = Convert.ToString(row["ProductImage"]),
                 };
-
+                
             }
             return product;
         }
@@ -192,6 +196,8 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlCommand.Parameters.AddWithValue("@PhoneNumber", orderDetail.PhoneNumber);
             sqlConnection.Open();
             int id = Convert.ToInt32(sqlCommand.ExecuteScalar());
+            orderDetail.OrderID = OrderHistory.Count + 1; // Simulate auto-increment ID
+            OrderHistory.Add(orderDetail);
             sqlConnection.Close();
             if (id > 0)
             {
@@ -271,6 +277,10 @@ namespace ShopcluesShoppingPortal.Data_Access
 
             }
             return order;
+        }
+        public static List<OrderDetail> GetOrderHistory(string emailAddress)
+        {
+            return OrderHistory.Where(o => o.EmailAddress == emailAddress).ToList();
         }
     }
 }

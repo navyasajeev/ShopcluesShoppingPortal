@@ -1,0 +1,12 @@
+﻿.navbar .logo {
+    color: aliceblue;
+    font-size: 25px;
+    line-height: 50px;
+    font-weight: bold;
+}
+
+    .navbar .logo img {
+        height: 25px;
+        width: 25px;
+        margin-right: 10px;
+    }

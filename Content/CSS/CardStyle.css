@@ -4,6 +4,7 @@
     justify-content: center; /* Center items horizontally */
     padding: 15px; /* Adjust padding as needed */
     margin: 4px 7px 2px 4px; /* Adjust margins as needed */
+    margin-top: 150px;
 }
 
 .card {

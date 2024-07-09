@@ -7,6 +7,8 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/bootstrap") <!-- Include Bootstrap JS -->
+<link href="~/Content/CSS/AdminStyle.css" rel="stylesheet" />
+
     <style>
         /* Optional: Adjust padding or margin for better alignment */
         .navbar-nav {
@@ -18,13 +20,20 @@
 
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
-            @Html.ActionLink("Welcome admin@gmail.com!", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <label class="logo">
+                <img src="@Url.Content("~/Content/Images/Shopclueslogo.png")" alt="Shopclues Logo">
+                Shopclues
 
+            </label>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <div>
+                @Html.ActionLink("Welcome admin@gmail.com!", "AdminDashBoard", "Admin", new { area = "" }, new { @class = "navbar-brand" })
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+           
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">

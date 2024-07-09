@@ -7,9 +7,7 @@
 
 <h2>All customers</h2>
 
-<p>
-    @Html.ActionLink("Create new customer", "AddCustomerDetails",null, new { @class = "btn btn-primary" })
-</p>
+
 <table class="table">
     <tr>
         <th>
@@ -82,7 +80,6 @@
         <td>
             @Html.ActionLink("Details", "Details", new { id = item.UserID }, new { @class = "btn btn-primary" })
 
-            @Html.ActionLink("Delete", "Delete", new { id = item.UserID }, new { @class = "btn btn-danger" })
         </td>
     </tr>
 }

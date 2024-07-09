@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ShopcluesShoppingPortal.Models
 {
@@ -13,29 +14,31 @@ namespace ShopcluesShoppingPortal.Models
         [Key]
         public int ProductID { get; set; }
 
-        [Required(ErrorMessage="Please enter the product name")]
+      //  [Required(ErrorMessage="Please enter the product name")]
         public string ProductName { get; set; }
 
-        [Required(ErrorMessage = "Please enter the category name")]
+      //  [Required(ErrorMessage = "Please enter the category name")]
         public string CategoryName { get; set; }
 
-        [Required(ErrorMessage = "Please enter the descriptionof the product")]
+     //   [Required(ErrorMessage = "Please enter the description of the product")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Please enter the stock")]
+     //   [Required(ErrorMessage = "Please enter the stock")]
         public int Stock { get; set; }
 
-        [Required(ErrorMessage = "Enter the Created date")]
+        
+    //    [Required(ErrorMessage = "Enter the Created date")]
+        [DataType(DataType.Date)]
         public DateTime CreatedDate { get; set; }
 
-        [Required(ErrorMessage = "Enter the price")]
+     //   [Required(ErrorMessage = "Enter the price")]
         public int Price { get; set; }
 
-        [Required(ErrorMessage ="Upload product image")]
+   //     [Required(ErrorMessage ="Upload product image")]
         public string ProductImage { get; set; }
 
-      //  [NotMapped]
-     //  public HttpPostedFileBase ProductImageFile { get; set; }
+        //  [NotMapped]
+        //  public HttpPostedFileBase ProductImageFile { get; set; }
 
     }
 }

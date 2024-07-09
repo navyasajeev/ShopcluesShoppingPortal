@@ -7,6 +7,7 @@ using System.Web;
 using System.Configuration;
 using ShopcluesShoppingPortal.Models;
 using System.Drawing;
+using ShopcluesShoppingPortal.Common;
 
 namespace ShopcluesShoppingPortal.Data_Access
 {
@@ -26,6 +27,8 @@ namespace ShopcluesShoppingPortal.Data_Access
         public bool InsertUserData(Registration registration)
         {
                 Connection();
+                Password EncryptData = new Password();
+                
                 SqlCommand sqlCommand = new SqlCommand("SPI_UserRegistration", sqlConnection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.AddWithValue("@FirstName", registration.FirstName);
@@ -37,8 +40,8 @@ namespace ShopcluesShoppingPortal.Data_Access
                 sqlCommand.Parameters.AddWithValue("@State", registration.State);
                 sqlCommand.Parameters.AddWithValue("@City", registration.City);
                 sqlCommand.Parameters.AddWithValue("@EmailAddress", registration.EmailAddress);
-                sqlCommand.Parameters.AddWithValue("@Password", registration.Password);
-                sqlCommand.Parameters.AddWithValue("@ConfirmPassword", registration.ConfirmPassword);
+                sqlCommand.Parameters.AddWithValue("@Password", EncryptData.Encode(registration.Password));
+                sqlCommand.Parameters.AddWithValue("@ConfirmPassword", EncryptData.Encode(registration.ConfirmPassword));
                 sqlConnection.Open();
                 int id = sqlCommand.ExecuteNonQuery();
                 sqlConnection.Close();
@@ -186,10 +189,16 @@ namespace ShopcluesShoppingPortal.Data_Access
         public bool LoginDetails(Login login)
         {
             Connection();
+            Password EncryptData = new Password();
+
             SqlCommand sqlCommand = new SqlCommand("SPS_LOGIN", sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.Parameters.AddWithValue("@EmailAddress", login.EmailAddress);
-            sqlCommand.Parameters.AddWithValue("@Password", login.Password);
+            if (!string.IsNullOrEmpty(login.Password))
+            {
+                sqlCommand.Parameters.AddWithValue("@Password", EncryptData.Encode(login.Password));
+            }
+           
             sqlConnection.Open();           
             bool isValidUser = (bool)sqlCommand.ExecuteScalar(); 
             sqlConnection.Close();

@@ -1,0 +1,62 @@
+﻿
+@model List<ShopcluesShoppingPortal.Models.CartItem>
+
+@{
+    ViewBag.Title = "CartDetails";
+    Layout = "~/Views/Shared/_UserView.cshtml";
+}
+
+<div class="container-cart" style="margin-top:150px; height:300px;">
+    <h2>Shopping Cart</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Product.ProductName</td>
+                        <td>
+                            @Html.TextBox("quantity", item.Quantity, new { onchange = "updateCart(@item.Product.ProductID, this.value)" })
+                        </td>
+                        <td>$@item.Product.Price</td>
+                        <td>$@(item.Quantity * item.Product.Price)</td>
+                        <td>@Html.ActionLink("Remove", "RemoveFromCart", "Home", new { productId = item.Product.ProductID }, null)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <p>Total: $@Model.Sum(item => item.Quantity * item.Product.Price)</p>
+        <p><a href="@Url.Action("PlaceOrderForm", "Home")">Place Order</a></p>
+        <p><a href="@Url.Action("UserDashBoard", "Home")">Go home</a></p>
+
+    }
+    else
+    {
+        <p>Your cart is empty.</p>
+    }
+    </div>
+    <script src="~/Scripts/jquery-3.7.0.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script>
+    function updateCart(productId, quantity) {
+        $.ajax({
+            url: '@Url.Action("UpdateCart", "Home")',
+            type: 'POST',
+            data: { productId: productId, quantity: quantity },
+            success: function (result) {
+                location.reload();
+            }
+        });
+    }
+    </script>

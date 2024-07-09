@@ -58,7 +58,7 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductImage)
+            <div><img src="@Url.Content(item.ProductImage)" style="max-width:100px;max-height:100px" /></div>
         </td>
          <td>
      @Html.ActionLink("Edit", "EditProductDetails", null, new { id = item.ProductID }, new { @class = "btn btn-success" })

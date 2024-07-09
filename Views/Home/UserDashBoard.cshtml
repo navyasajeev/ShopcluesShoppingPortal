@@ -12,7 +12,7 @@
 
 <div class="about">
 
-    @if (Model != null )
+    @if (Model != null && Model.Any())
     {
         foreach (var item in Model)
         {
@@ -25,11 +25,12 @@
                 <p>@Html.DisplayFor(modelItem => item.Description)</p>
                 <p>
 
-                    <p><a href="@Url.Action("PlaceOrder", "Order", new { productId = item.ProductID })">Buy now</a></p>
-                
-                    </p>
+                <p><a href="@Url.Action("PlaceOrder", "Order", new { productId = item.ProductID })">Buy now</a></p>
+                @Html.ActionLink("Add to cart", "AddToCart", "Home", new { productId = item.ProductID }, null)
 
-                </div>
+                </p>
+
+            </div>
         }
     }
     else

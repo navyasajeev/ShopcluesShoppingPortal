@@ -3,16 +3,20 @@
     justify-content: center;
     align-items: center;
     height: 70vh;
-    background-color: #f7e2e1; /* Background color for the login form area */
+    background-color: #ffffff; /* Background color for the login form area */
+    margin-top:150px;
+  
 }
-
+.card-body{
+    width:350px;
+}
 .login-form {
     width: 100%;
-    max-width: 380px;
+    max-width: 740px;
     padding: 20px;
    
-    background-color: #ffffff; /* Form background color */
-    border: 1px solid #ccc;
+    background-color: #c3c0c0; /* Form background color */
+    border: 1px solid #000000;
     border-radius: 15px;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.1); /* Optional: Box shadow for a slight elevation effect */
 }
@@ -24,16 +28,29 @@
         margin-bottom: 15px;
         justify-content: center;
         align-items: center;
+        position: relative;
     }
+        .login-form .form-group .col-md-10 {
+            position: relative; /* Ensure relative positioning for absolute positioning of the icon */
+        }
 
-    .login-form input[type="submit"] {
-        width: 100%;
-        background-color: #000000;
-        color: #ffffff;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-    }
+            .login-form .form-group .col-md-10 .input-group-addon {
+                position: absolute;
+                top: 50%;
+                right: 10px; /* Adjust this value based on your preference */
+                transform: translateY(-50%);
+            }
+
+
+
+.login-form input[type="submit"] {
+    width: 100%;
+    background-color: #000000;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
 
         .login-form input[type="submit"]:hover {
             background-color: #0056b3;

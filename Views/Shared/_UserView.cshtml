@@ -21,7 +21,7 @@
     @{
         string userEmail = Session["userEmail"] as string;
     }
-   
+
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm ">
         <div class="container">
             <label class="logo">
@@ -34,12 +34,20 @@
             </button>
             <div class="topnav-right">
                 <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                   
+                    <form action="@Url.Action("UserDashBoard", "Home")" method="get" class="d-flex ms-auto">
+                        <input  class="form-control-search me-2" type="search" placeholder="Search" aria-label="Search"  name="searchQuery" value="@ViewBag.SearchQuery">
+                        <button class="btn btn-outline-secondary" type="submit">Search</button>
+                    </form>
                     <ul class="navbar-nav">
-                        <li><a class="nav-link" href="@Url.Action("Details","NewRegister")">@userEmail</a></li>
+                        <li><a class="nav-link" href="@Url.Action("UserDashBoard","Home")">@userEmail</a></li>
                         <li>@Html.ActionLink("Home", "UserDashBoard", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li>@Html.ActionLink("Order history", "OrderHistory", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
                         <li>@Html.ActionLink("Logout", "MainDash", "Home", new { area = "" }, new { @class = "nav-link" })</li>
 
                     </ul>
+
                 </div>
             </div>
         </div>
@@ -55,13 +63,13 @@
 
         <footer class="footerdistributed">
             <div class="footerleft">
-                <h3>Shopclues</span></h3>
+                <h3>Shopclues</h3>
                 <p class="footerlinks">
-                    <a href="home.html">Home</a>
+                    <a href="#">Home</a>
                     |
-                    <a href="Aboutus.html">About us</a>
+                    <a href="#">About us</a>
                     |
-                    <a href="Contactus.html">Contact us</a>
+                    <a href="#">Contact us</a>
                     |
                 </p>
                 <p class="footercompany">
@@ -88,7 +96,7 @@
             <div class="footerright">
                 <p class="footerabout">
                     <span>About the company</span>
-                    <strong>Shopclues</strong>is India’s first online Managed Marketplace that connects buyers and sellers online and offers a trusted and safe online shopping environment.
+                    <strong>Shopclues</strong> is India’s first online Managed Marketplace that connects buyers and sellers online and offers a trusted and safe online shopping environment.
                 </p>
                 <div class="icons">
                     <a href="#"><i class="fa-brands fa-twitter"></i></a>
@@ -104,6 +112,8 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="~/Scripts/Custom JS/DisableBrowserBack.js"></script>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

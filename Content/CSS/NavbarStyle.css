@@ -5,44 +5,50 @@
     box-sizing: border-box;
 }
 /* adding style to the body element  */
-body {
-     font-family:sans-serif; 
+.body {
+     font-family:'Times New Roman'; 
     background: #f7e2e1;
-
+    margin-top:120px;
+    min-height:100vh;
 }
 
-navbar {
+/* Navbar styles */
+.navbar {
     background: #992723;
     height: 80px;
-    width: 80%;
+    width: 100%; /* Adjusted width to fill the entire viewport */
+    position: fixed; /* Ensures navbar stays fixed at the top */
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Ensures navbar is above other content */
 }
 
-label.logo {
-    color: aliceblue;
-    font-size: 35px;
-    line-height: 80px;
-    padding: 0px 30px 0px 10px;
-    font-weight: bold;
-}
-
-    label.logo img {
-        height: 30px;
-        width: 30px;
-        margin-right: 10px;
+    .navbar .logo {
+        color: aliceblue;
+        font-size: 35px;
+        line-height: 80px;
+        padding: 0 10px 0 10px;
+        font-weight: bold;
     }
 
-nav ul {
+        .navbar .logo img {
+            height: 30px;
+            width: 30px;
+            margin-right: 10px;
+        }
+
+.navbar-nav {
     float: right;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
-    nav ul li {
+    .navbar-nav li {
         display: inline-block;
-        line-height: 80px;
+        line-height: 20px;
         margin: 0 5px;
     }
 
-        nav ul li a {
+        .navbar-nav li a {
             color: white;
             font-size: 17px;
             padding: 7px 13px;
@@ -50,43 +56,19 @@ nav ul {
             text-transform: none;
         }
 
-a.active, a:hover {
-    background: #7e0f0f;
-    transition: .5s;
+            .navbar-nav li a.active,
+            .navbar-nav li a:hover {
+                background: aliceblue;
+                transition: .5s;
+            }
+
+.navbar-toggler {
+    display: none; /* Hides the default Bootstrap toggler */
 }
 
-.checkbtn {
-    font-size: 30px;
-    color: rgb(246, 245, 248);
-    float: right;
-    line-height: 80px;
-    margin-right: 40px;
-    cursor: pointer;
-    display: none;
-}
-
-#check {
-    display: none;
-}
-
-@media (max-width:952px) {
-    label.logo {
-        font-size: 30px;
-        padding-left: 50px;
-        color: aliceblue;
-    }
-
-    nav ul li a {
-        font-size: 16px;
-    }
-}
-
-@media (max-width:858px) {
-    .checkbtn {
-        display: block;
-    }
-
-    ul {
+/* Media queries for responsive behavior */
+@media (max-width: 858px) {
+    .navbar-nav {
         position: fixed;
         width: 100%;
         height: 100vh;
@@ -97,52 +79,43 @@ a.active, a:hover {
         transition: all .5s;
     }
 
-    nav ul li {
-        display: block;
-        margin: 50px 0;
-        line-height: 30px;
-    }
-
-        nav ul li a {
-            font-size: 20px;
+        .navbar-nav li {
+            display: block;
+            margin: 50px 0;
+            line-height: 30px;
         }
 
-    a:hover, a.active {
-        background: none;
-        color: #0082e6;
-    }
+            .navbar-nav li a {
+                font-size: 20px;
+            }
 
-    #check:checked ~ ul {
+                .navbar-nav li a:hover,
+                .navbar-nav li a.active {
+                    background: none;
+                    color: #0082e6;
+                }
+
+    #check:checked ~ .navbar-nav {
         left: 0;
     }
 }
+
 
 /* adding style to the id  home  */
 
 
 /* adding style to the footer section  */
-footer {
-    position: fixed;
-    bottom: 0;
-}
 
-@media (max-height:800px) {
-    footer {
-        position: static;
-    }
-
-    header {
-        padding-top: 40px;
-    }
-}
 
 .footerdistributed {
     background-color: rgb(125, 23, 23);
-    /* windows:100%; */
+    width: 100%;
     box-sizing: border-box;
     text-align: left;
     padding: 50px 50px 60px 50px;
     margin-top: 80px;
+    position: relative; /* Make the footer fixed */
+    bottom: 0; /* Stick the footer to the bottom of the viewport */
 }
 
     .footerdistributed .footerleft, .footerdistributed .footercenter, .footerdistributed .footerright {
