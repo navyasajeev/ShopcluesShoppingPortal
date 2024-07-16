@@ -26,9 +26,11 @@ namespace ShopcluesShoppingPortal.Data_Access
         /// <returns></returns>
         public bool InsertUserData(Registration registration)
         {
+            try
+            {
                 Connection();
                 Password EncryptData = new Password();
-                
+
                 SqlCommand sqlCommand = new SqlCommand("SPI_UserRegistration", sqlConnection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.AddWithValue("@FirstName", registration.FirstName);
@@ -44,14 +46,23 @@ namespace ShopcluesShoppingPortal.Data_Access
                 sqlCommand.Parameters.AddWithValue("@ConfirmPassword", EncryptData.Encode(registration.ConfirmPassword));
                 sqlConnection.Open();
                 int id = sqlCommand.ExecuteNonQuery();
-                sqlConnection.Close();
+              
                 if (id > 0)
-                 {
-                      return true;
-                 }
-                         else
-                 {
-                return false;
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            finally
+            {
+               
+                if (sqlConnection != null && sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
             }
 
         }
@@ -61,16 +72,17 @@ namespace ShopcluesShoppingPortal.Data_Access
         /// <returns></returns>
         public List<Registration> GetAllUsers()
         {
-            List<Registration> UserList = new List<Registration> ();            
+            try
+            {
+                List<Registration> UserList = new List<Registration>();
                 Connection();
                 SqlCommand sqlCommand = new SqlCommand("SPS_GetUserDetails", sqlConnection);
                 sqlCommand.CommandType = CommandType.StoredProcedure;
-              
+
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dataTable = new DataTable();
                 sqlConnection.Open();
                 sqlDataAdapter.Fill(dataTable);
-                sqlConnection.Close();
                 UserList = (from DataRow dr in dataTable.Rows
                             select new Registration()
                             {
@@ -87,7 +99,16 @@ namespace ShopcluesShoppingPortal.Data_Access
                                 Password = Convert.ToString(dr["Password"]),
                                 ConfirmPassword = Convert.ToString(dr["ConfirmPassword"]),
                             }).ToList();
-            return UserList;
+                return UserList;
+            }
+            finally
+            {
+                // Ensure connection is closed even if an exception occurs
+                if (sqlConnection != null && sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
         }
         /// <summary>
         /// Get customer details  by id
@@ -96,16 +117,18 @@ namespace ShopcluesShoppingPortal.Data_Access
         /// <returns></returns>
        public List<Registration> GetCustomerByID(int UserID)
         {
-            List<Registration> customerList = new List<Registration>();
-            Connection();
-            SqlCommand sqlCommand = new SqlCommand("SPS_GetUserByID", sqlConnection);
-            sqlCommand.CommandType = CommandType.StoredProcedure;
+            try
+            {
+                List<Registration> customerList = new List<Registration>();
+                Connection();
+                SqlCommand sqlCommand = new SqlCommand("SPS_GetUserByID", sqlConnection);
+                sqlCommand.CommandType = CommandType.StoredProcedure;
                 sqlCommand.Parameters.AddWithValue("@UserID", UserID);
                 SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(sqlCommand);
                 DataTable dataTable = new DataTable();
                 sqlConnection.Open();
                 sqlDataAdapter.Fill(dataTable);
-                sqlConnection.Close();
+             
                 customerList = (from DataRow dr in dataTable.Rows
                                 select new Registration()
                                 {
@@ -121,8 +144,17 @@ namespace ShopcluesShoppingPortal.Data_Access
                                     EmailAddress = Convert.ToString(dr["EmailAddress"]),
                                     Password = Convert.ToString(dr["Password"]),
                                     ConfirmPassword = Convert.ToString(dr["ConfirmPassword"]),
-                                }).ToList();       
-            return customerList;
+                                }).ToList();
+                return customerList;
+            }
+            finally
+            {
+                // Ensure connection is closed even if an exception occurs
+                if (sqlConnection != null && sqlConnection.State == ConnectionState.Open)
+                {
+                    sqlConnection.Close();
+                }
+            }
         }
         /// <summary>
         /// Update the details of the user
@@ -132,6 +164,7 @@ namespace ShopcluesShoppingPortal.Data_Access
         public bool UpdateCustomerData(Registration registration)
         {
             Connection();
+            Password EncryptData = new Password();
             SqlCommand sqlCommand = new SqlCommand("SPU_UserDetails", sqlConnection);
             sqlCommand.CommandType = CommandType.StoredProcedure;
             sqlCommand.Parameters.AddWithValue("@UserID", registration.UserID);
@@ -144,8 +177,8 @@ namespace ShopcluesShoppingPortal.Data_Access
             sqlCommand.Parameters.AddWithValue("@State", registration.State);
             sqlCommand.Parameters.AddWithValue("@City", registration.City);
             sqlCommand.Parameters.AddWithValue("@EmailAddress", registration.EmailAddress);
-            sqlCommand.Parameters.AddWithValue("@Password", registration.Password);
-            sqlCommand.Parameters.AddWithValue("@ConfirmPassword", registration.ConfirmPassword);
+            sqlCommand.Parameters.AddWithValue("@Password", EncryptData.Encode(registration.Password));
+            sqlCommand.Parameters.AddWithValue("@ConfirmPassword", EncryptData.Encode(registration.ConfirmPassword));
             sqlConnection.Open();
             int id = sqlCommand.ExecuteNonQuery();
             sqlConnection.Close();
@@ -206,6 +239,11 @@ namespace ShopcluesShoppingPortal.Data_Access
                      
         }
         
+
+
+
+
+
 
 
 

@@ -40,7 +40,7 @@
                         <button class="btn btn-outline-secondary" type="submit">Search</button>
                     </form>
                     <ul class="navbar-nav">
-                        <li><a class="nav-link" href="@Url.Action("UserDashBoard","Home")">@userEmail</a></li>
+                        <li><a class="nav-link" href="@Url.Action("EditCustomerDetails","NewRegister",new { emailAddress = userEmail })">@userEmail</a></li>
                         <li>@Html.ActionLink("Home", "UserDashBoard", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                         <li>@Html.ActionLink("Order history", "OrderHistory", "Home", new { area = "" }, new { @class = "nav-link" })</li>
 

@@ -1,0 +1,14 @@
+﻿.button-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #9e6a6a; /* Button color */
+    color: #fff; /* Text color */
+    text-decoration: none; /* Remove underline */
+    border: none; /* Remove border */
+    border-radius: 4px; /* Optional: Rounded corners */
+    cursor: pointer; /* Show cursor as pointer on hover */
+}
+
+    .button-link:hover {
+        background-color: #9e6a6a; /* Darker color on hover */
+    }

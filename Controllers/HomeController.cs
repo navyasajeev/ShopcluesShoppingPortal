@@ -78,22 +78,30 @@ namespace ShopcluesShoppingPortal.Controllers
         /// <returns></returns>
         public ActionResult UserDashBoard(string searchQuery)
         {
-            var products = productRepository.GetAllProduct();
-            if (!string.IsNullOrEmpty(searchQuery))
-            {               
-                ViewBag.SearchQuery = searchQuery;
-                searchQuery = searchQuery.ToLower(); // Convert searchQuery to lowercase for case-insensitive search
+            try
+            {
+                var products = productRepository.GetAllProduct();
+                if (!string.IsNullOrEmpty(searchQuery))
+                {
+                    ViewBag.SearchQuery = searchQuery;
+                    searchQuery = searchQuery.ToLower(); // Convert searchQuery to lowercase for case-insensitive search
 
-                var filteredProducts = products.Where(p =>
-                    p.ProductName.ToLower().Contains(searchQuery) ||
-                    p.CategoryName.ToLower().Contains(searchQuery)
-                ).ToList();
+                    var filteredProducts = products.Where(p =>
+                        p.ProductName.ToLower().Contains(searchQuery) ||
+                        p.CategoryName.ToLower().Contains(searchQuery)
+                    ).ToList();
 
-                return View(filteredProducts);
+                    return View(filteredProducts);
+                }
+
+                ViewBag.SearchQuery = "";
+                return View(products);
             }
-
-            ViewBag.SearchQuery = "";
-            return View(products);
+            catch
+            {
+                ViewBag.ErrorMessage = "An error occurred while processing your request.";
+                return View("Error");
+            }
         }
         public ActionResult MainDash()
         {
@@ -201,129 +209,228 @@ namespace ShopcluesShoppingPortal.Controllers
             }
             
         }
-
+           /// <summary>
+           /// Add to cart details
+           /// </summary>
+           /// <returns>items in the cart</returns>
         public ActionResult CartDetails()
         {
             var cart = Session["Cart"] as List<CartItem> ?? new List<CartItem>();
             return View(cart);
         }
-
+        /// <summary>
+        /// Add a product to the existing cart
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         public ActionResult AddToCart(int productId)
         {
-            var productRepository = new ProductRepository();
-            var product = productRepository.GetProductById(productId);
-
-            if (product != null)
+            try
             {
-                var cart = Session["Cart"] as List<CartItem> ?? new List<CartItem>();
-
-                // Check if the product is already in the cart
-                var cartItem = cart.FirstOrDefault(item => item.Product.ProductID == productId);
-
-                if (cartItem != null)
+                var productRepository = new ProductRepository();
+                var product = productRepository.GetProductById(productId);
+                if (product != null && product.Stock > 0)
                 {
-                    cartItem.Quantity++;
+                    var cart = Session["Cart"] as List<CartItem> ?? new List<CartItem>();
+
+                    // Check if the product is already in the cart
+                    var cartItem = cart.FirstOrDefault(item => item.Product.ProductID == productId);
+
+                    if (cartItem != null)
+                    {
+                        if (cartItem.Quantity < product.Stock)
+                        {
+                            cartItem.Quantity++;
+                        }
+                        else
+                        {
+                            ViewBag.Message = "Maximum stock limit reached for this product.";
+                        }
+                    }
+                    else
+                    {
+                        cart.Add(new CartItem { Product = product, Quantity = 1 });
+                    }
+
+                    Session["Cart"] = cart;
                 }
                 else
                 {
-                    cart.Add(new CartItem { Product = product, Quantity = 1 });
+                    ViewBag.Message = "Product is out of stock.";
                 }
-
-                Session["Cart"] = cart;
+                return RedirectToAction("CartDetails", "Home");
             }
-
-            return RedirectToAction("CartDetails", "Home");
-        }
-
-        public ActionResult UpdateCart(int productId, int quantity)
-        {
-            var cart = Session["Cart"] as List<CartItem>;
-
-            if (cart != null)
+            catch
             {
-                var cartItem = cart.FirstOrDefault(item => item.Product.ProductID == productId);
-
-                if (cartItem != null)
+                return View("Error");
+            }
+        }
+        /// <summary>
+        /// Update the product details by adding new items to the cart
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
+        public ActionResult UpdateCartQuantity(int productId, int quantity)
+        {
+            try
+            {
+                var cart = Session["Cart"] as List<CartItem>;
+                if (cart != null)
                 {
-                    cartItem.Quantity = quantity;
+                    var cartItem = cart.FirstOrDefault(item => item.Product.ProductID == productId);
+
+                    if (cartItem != null)
+                    {
+
+                        if (quantity > 0 && quantity <= cartItem.Product.Stock)
+                        {
+                            cartItem.Quantity = quantity;
+                        }
+                        else
+                        {
+                            // Handle case where requested quantity exceeds available stock
+                            ViewBag.Message["ErrorMessage"] = "Requested quantity exceeds available stock.";
+                            return RedirectToAction("CartDetails", "Home");
+                        }
+                        Session["Cart"] = cart; // Update session with the modified cart
+
+                    }
                 }
 
-                Session["Cart"] = cart;
+                return RedirectToAction("CartDetails", "Home");
             }
-           // return Json(new { success = true });
-            return RedirectToAction("CartDetails", "Home");
+            catch 
+            {
+                return View("Error");
+            }
         }
+        /// <summary>
+        /// Remove a cart item from the cart
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         public ActionResult RemoveFromCart(int productId)
         {
-            var cart = Session["Cart"] as List<CartItem>;
-
-            if (cart != null)
+            try
             {
-                var cartItemToRemove = cart.FirstOrDefault(item => item.Product.ProductID == productId);
-
-                if (cartItemToRemove != null)
+                var cart = Session["Cart"] as List<CartItem>;
+                if (cart != null)
                 {
-                    cart.Remove(cartItemToRemove);
-                    Session["Cart"] = cart; // Update the session with the modified cart
+                    var cartItemToRemove = cart.FirstOrDefault(item => item.Product.ProductID == productId);
+
+                    if (cartItemToRemove != null)
+                    {
+                        cart.Remove(cartItemToRemove);
+                        Session["Cart"] = cart; // Update the session with the modified cart
+                    }
                 }
+                return RedirectToAction("CartDetails", "Home");
             }
+            catch 
+            {
 
-            return RedirectToAction("CartDetails", "Home");
+                return View("Error");
+            }
         }
-
+        /// <summary>
+        /// place order of the cart items
+        /// </summary>
+        /// <returns></returns>
         public ActionResult PlaceOrderForm()
         {
-            // Assuming you have a form to collect additional order details
             return View();
         }
-
+        /// <summary>
+        /// Place order  for the list of items from the cart
+        /// </summary>
+        /// <param name="orderDetail"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult PlaceOrderForm(OrderDetail orderDetail)
         {
-            var cart = Session["Cart"] as List<CartItem>;
-            var productRepository = new ProductRepository();
+            try
+            {
+                var cart = Session["Cart"] as List<CartItem>;
+                var productRepository = new ProductRepository();
 
-            if (ModelState.IsValid)
-            {
-                // Loop through cart items and add orders
-                foreach (var item in cart)
-            {
-                var order = new OrderDetail
+                if (ModelState.IsValid)
                 {
-                    ProductName = item.Product.ProductName,
-                    Quantity = item.Quantity,
-                    EmailAddress = Session["userEmail"] as string,
-                    OrderDate = DateTime.Now,
-                    TotalAmount = item.Quantity * item.Product.Price,
-                    Address = orderDetail.Address,
-                    Pincode = orderDetail.Pincode,
-                    PhoneNumber = orderDetail.PhoneNumber
-                };
+                    // Loop through cart items and add orders
+                    foreach (var item in cart)
+                    {
+                        var order = new OrderDetail
+                        {
+                            ProductName = item.Product.ProductName,
+                            Quantity = item.Quantity,
+                            EmailAddress = Session["userEmail"] as string,
+                            OrderDate = DateTime.Now,
+                            TotalAmount = item.Quantity * item.Product.Price,
+                            Address = orderDetail.Address,
+                            Pincode = orderDetail.Pincode,
+                            PhoneNumber = orderDetail.PhoneNumber,
+                            Status = GetInitialStatus(orderDetail.OrderID)
+                        };
 
-                productRepository.AddOrder(order);
+                        productRepository.AddOrder(order);
+                        productRepository.UpdateStock(item.Product.ProductID, item.Quantity);
+                    }
+                    // Clear the cart after placing order
+                    Session["Cart"] = null;
+
+                    ViewBag.Message = "Order placed successfully!";
+                    return RedirectToAction("ConfirmMessage", "Home");
+                }
+                return View(orderDetail);
             }
+            catch
+            {
 
-            // Clear the cart after placing order
-            Session["Cart"] = null;
-
-            ViewBag.Message = "Order placed successfully!";
-            return RedirectToAction("ConfirmMessage", "Home"); // Redirect to home page or order summary page
+                return View("Error");
             }
-
-            // If the model state is not valid, return to the same view to correct errors
-            return View(orderDetail);
         }
+        private string GetInitialStatus(int productId)
+        {
+            
+            return "Pending"; 
+        }
+        /// <summary>
+        /// Redirect to the confirm message after placing the order
+        /// </summary>
+        /// <returns></returns>
         public ActionResult ConfirmMessage()
         {
             return View();
         }
+        /// <summary>
+        /// Shows the orderHistory of a particular user
+        /// </summary>
+        /// <returns></returns>
         public ActionResult OrderHistory()
         {
-            string userEmail = Session["userEmail"] as string;
-            var orders = ProductRepository.GetOrderHistory(userEmail);
+            try
+            {
+                string userEmail = Session["userEmail"] as string;
+                var orders = ProductRepository.GetOrderHistory(userEmail);
 
-            return View(orders);
+                // Ensure to refresh the session or cache here if needed
+                orders = orders.Select(order =>
+                {
+                    var updatedOrder = productRepository.GetOrderById(order.OrderID);
+                    return updatedOrder ?? order; // Return updated order if found, otherwise original
+                }).ToList();
+
+                return View(orders);
+            }
+            catch 
+            {
+                ViewBag.ErrorMessage = "Error occurred while retrieving order history.";
+                // Log the exception
+                return View("Error");
+            }
         }
+
+        
 
     }
 }

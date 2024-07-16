@@ -6,12 +6,49 @@
     Layout = "~/Views/Shared/_UserView.cshtml";
 }
 
+@section scripts {
+    <script>
+        function updateCart(productId, quantity) {
+            $.ajax({
+                url: '@Url.Action("UpdateCartQuantity", "Home")',
+                type: 'POST',
+                data: { productId: productId, quantity: quantity },
+                success: function (result) {
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.log("Error updating cart:", error);
+                }
+            });
+        }
+
+        function incrementQuantity(productId) {
+            var quantityInput = $('#quantity-' + productId);
+            var quantity = parseInt(quantityInput.val());
+            quantity++;
+            quantityInput.val(quantity);
+            updateCart(productId, quantity);
+        }
+
+        function decrementQuantity(productId) {
+            var quantityInput = $('#quantity-' + productId);
+            var quantity = parseInt(quantityInput.val());
+            if (quantity > 1) {
+                quantity--;
+                quantityInput.val(quantity);
+                updateCart(productId, quantity);
+            }
+        }
+    </script>
+}
+
+<link href="~/Content/CSS/ShoppingCart.css" rel="stylesheet" />
 <div class="container-cart" style="margin-top:150px; height:300px;">
-    <h2>Shopping Cart</h2>
+    <h2>Shopping cart</h2>
 
     @if (Model != null && Model.Any())
     {
-        <table class="table">
+        <table class="table table-bordered text-center">
             <thead>
                 <tr>
                     <th>Product</th>
@@ -27,7 +64,11 @@
                     <tr>
                         <td>@item.Product.ProductName</td>
                         <td>
-                            @Html.TextBox("quantity", item.Quantity, new { onchange = "updateCart(@item.Product.ProductID, this.value)" })
+                            <div>
+                                <button type="button" onclick="decrementQuantity('@item.Product.ProductID')" style="background-color:lightsalmon;width:25px;border-radius:20px;color:aliceblue">-</button>
+                                <input type="number" id="quantity-@item.Product.ProductID" value="@item.Quantity" style="width: 40px;" readonly />
+                                <button type="button" onclick="incrementQuantity('@item.Product.ProductID')" style="background-color: lightsalmon; width: 25px; border-radius: 20px; color: aliceblue ">+</button>
+                            </div>
                         </td>
                         <td>$@item.Product.Price</td>
                         <td>$@(item.Quantity * item.Product.Price)</td>
@@ -37,26 +78,14 @@
             </tbody>
         </table>
         <p>Total: $@Model.Sum(item => item.Quantity * item.Product.Price)</p>
-        <p><a href="@Url.Action("PlaceOrderForm", "Home")">Place Order</a></p>
-        <p><a href="@Url.Action("UserDashBoard", "Home")">Go home</a></p>
+        <p><a class="button-link" href="@Url.Action("PlaceOrderForm", "Home")">Place order</a></p>
+        <p><a href="@Url.Action("UserDashBoard", "Home")">Continue shopping</a></p>
 
     }
     else
     {
         <p>Your cart is empty.</p>
     }
-    </div>
-    <script src="~/Scripts/jquery-3.7.0.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script>
-    function updateCart(productId, quantity) {
-        $.ajax({
-            url: '@Url.Action("UpdateCart", "Home")',
-            type: 'POST',
-            data: { productId: productId, quantity: quantity },
-            success: function (result) {
-                location.reload();
-            }
-        });
-    }
-    </script>
+</div>
+
+

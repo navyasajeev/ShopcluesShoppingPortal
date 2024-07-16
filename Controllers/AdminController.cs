@@ -79,7 +79,7 @@ namespace ShopcluesShoppingPortal.Controllers
                 }
                 else
                 {
-                    sqlCommand.Parameters.AddWithValue("@ProductImage", DBNull.Value); // Set parameter to DBNull.Value
+                    sqlCommand.Parameters.AddWithValue("@ProductImage",DBNull.Value); // Set parameter to DBNull.Value
                 }
                 sqlCommand.ExecuteNonQuery();
 
@@ -104,8 +104,7 @@ namespace ShopcluesShoppingPortal.Controllers
         {
             ProductRepository productRepository = new ProductRepository();
             ViewBag.Categories = GetCategories(); // Make sure this method returns List<SelectListItem>
-            var product = productRepository.GetProductById(id);
-          
+            var product = productRepository.GetProductById(id);          
             return View(product);
         }
         /// <summary>
@@ -157,9 +156,6 @@ namespace ShopcluesShoppingPortal.Controllers
         {
             ProductRepository productRepository = new ProductRepository();
             var product = productRepository.GetProductById(id);
-
-            
-
             return View(product);
         
         }
@@ -218,6 +214,39 @@ namespace ShopcluesShoppingPortal.Controllers
             return View(product);
 
         }
+        /// <summary>
+        /// This method used to update the order by admin that placed by the user
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="status"></param>
+        /// <returns></returns>
+        public ActionResult UpdateOrderStatus(int orderId, string status)
+        {
+            try
+            {
+                ProductRepository productRepository = new ProductRepository();
+
+                bool success = productRepository.UpdateOrderStatus(orderId, status);
+
+                if (success)
+                {
+                    Session.Remove("OrderHistory");
+                    ViewBag.Message = "Order status updated successfully!";
+                    return RedirectToAction("GetAllOrderDetails", "Admin");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Failed to update order status.";
+                    return View("Error");
+                }
+            }
+            catch 
+            {
+                ViewBag.ErrorMessage = "Error occurred while processing your request.";
+                return View("Error");
+            }
+        }
+
         private List<SelectListItem> GetCategories()
         {
             return new List<SelectListItem>

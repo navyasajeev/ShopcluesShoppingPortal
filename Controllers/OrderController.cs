@@ -24,21 +24,34 @@ namespace ShopcluesShoppingPortal.Controllers
         /// <returns>details of a particular product</returns>
         public ActionResult PlaceOrder(int productId)
         {
-            
-            var product = productRepository.GetProductById(productId);
-            var orderDetail = new OrderDetail
+            try
             {
-               
-                Product = product,
-                ProductName = product.ProductName, 
-                Quantity = 1, 
-                OrderDate = DateTime.Now,
-                TotalAmount = product.Price, 
-                EmailAddress = Session["userEmail"] as string
-            };
-          
+                var product = productRepository.GetProductById(productId);
+                if (product != null && product.Stock > 0)
+                {
+                    var orderDetail = new OrderDetail
+                    {
 
-            return View(orderDetail);
+                        Product = product,
+                        ProductName = product.ProductName,
+                        Quantity = 1,
+                        OrderDate = DateTime.Now,
+                        TotalAmount = product.Price,
+                        EmailAddress = Session["userEmail"] as string,
+                        Status = "Pending"
+
+                    };
+                    productRepository.UpdateStock(productId, 1);
+
+                    return View(orderDetail);
+
+                }
+                return View();
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
         /// <summary>
         /// Post:Place the order
@@ -54,8 +67,11 @@ namespace ShopcluesShoppingPortal.Controllers
                 if (ModelState.IsValid)
                 {
                 
+
+
                     if (productRepository.AddOrder(orderDetail))
                     {
+                        
                         ViewBag.Message = "Order placed successfully!";                     
                         return RedirectToAction("Message", new { orderId = orderDetail.OrderID });
                     }
@@ -71,13 +87,15 @@ namespace ShopcluesShoppingPortal.Controllers
             }
             return View(orderDetail);
         }
+        /// <summary>
+        /// Display a message shown related to the order placed
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <returns></returns>
         public ActionResult Message(int orderId)
         {
             var product = productRepository.GetOrderById(orderId);
-
-            
-
             return View(product);
         }
-        }
+      }
 }

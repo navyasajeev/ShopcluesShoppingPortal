@@ -168,6 +168,7 @@
     <Content Include="Content\CSS\OrderConfirmationStyle.css" />
     <Content Include="Content\CSS\PlaceOrderStyle.css" />
     <Content Include="Content\CSS\RegistrationStyle.css" />
+    <Content Include="Content\CSS\ShoppingCart.css" />
     <Content Include="Content\Images\2.jpg" />
     <Content Include="Content\Images\aboutus.jpg" />
     <Content Include="Content\Images\contact.jpg" />
@@ -185,6 +186,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.7.0.intellisense.js" />
+    <Content Include="Scripts\Custom JS\Cart.js" />
     <Content Include="Scripts\Custom JS\DateValidation.js" />
     <Content Include="Scripts\Custom JS\DisableBrowserBack.js" />
     <Content Include="Scripts\Custom JS\Image Carousel.js" />
@@ -222,7 +224,6 @@
     <Content Include="Views\Shared\_View.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\NewRegister\AddCustomerDetails.cshtml" />
-    <Content Include="Views\NewRegister\EditCustomerDetails.cshtml" />
     <Content Include="Views\NewRegister\GetAllCustomers.cshtml" />
     <Content Include="Views\NewRegister\Details.cshtml" />
     <Content Include="Views\Home\NewLogin.cshtml" />
@@ -245,6 +246,7 @@
     <Content Include="Views\Home\PlaceOrderForm.cshtml" />
     <Content Include="Views\Home\ConfirmMessage.cshtml" />
     <Content Include="Views\Home\OrderHistory.cshtml" />
+    <Content Include="Views\NewRegister\EditCustomerDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\File\" />

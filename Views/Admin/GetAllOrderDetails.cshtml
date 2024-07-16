@@ -8,7 +8,7 @@
 <h2>All order details</h2>
 
 
-<table class="table">
+<table class="table table-bordered text-center"">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProductName)
@@ -34,7 +34,7 @@
         <th>
             @Html.DisplayNameFor(model => model.PhoneNumber)
         </th>
-        <th></th>
+        <th>Action</th>
     </tr>
 
 @foreach (var item in Model) {

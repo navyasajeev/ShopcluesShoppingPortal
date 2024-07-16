@@ -2,6 +2,7 @@
 using ShopcluesShoppingPortal.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,37 +14,41 @@ namespace ShopcluesShoppingPortal.Controllers
         /// <summary>
         /// GET:Get the details of all new registered customer
         /// </summary>
-        /// <returns>list</returns>
+        /// <returns>list of all users</returns>
         public ActionResult GetAllCustomers()
         {
-            Repository repository = new Repository();
-            var UserList = repository.GetAllUsers();
-            if (UserList.Count == 0)
+            try
             {
-                ViewBag.Message = "Currently no  customers details in the database ";
+                Repository repository = new Repository();
+                var UserList = repository.GetAllUsers();
+                if (UserList.Count == 0)
+                {
+                    ViewBag.Message = "Currently no customers details in the database";
+                }
+                return View(UserList);
             }
-            return View(UserList);
+            catch 
+            {
+                ViewBag.ErrorMessage = "An error occurred while fetching customer details.";
+                return View("Error"); 
+            }
         }
-
         /// <summary>
         /// GET: NewRegister/Details- Details of a particular customer
         /// </summary>
         /// <param name="id"></param>
         /// <returns>list</returns>
         public ActionResult Details(int id)
-        {
-            {
+        {        
                 Repository repository = new Repository();
                 var user = repository.GetCustomerByID(id).FirstOrDefault(); ;
                 if (user == null)
                 {
-                    // Handle scenario where user with provided id is not found
                     ViewBag.Message = "User not found with ID " + id;
                     return RedirectToAction("GetAllCustomers");
                 }
 
-                return View(user);
-            }
+                return View(user);        
         }
 
         /// <summary>
@@ -72,7 +77,7 @@ namespace ShopcluesShoppingPortal.Controllers
                     Repository repository = new Repository();
                     if (repository.InsertUserData(registration))
                     {
-                        ViewBag.Message = "Employee details added successfully";
+                        ViewBag.Message = "Customer details added successfully";
                     }
                 }
                 ViewBag.States = GetStates();
@@ -91,19 +96,19 @@ namespace ShopcluesShoppingPortal.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult EditCustomerDetails(int id)
+        public ActionResult EditCustomerDetails(string emailAddress)
         {
             Repository repository = new Repository();
-            var customer = repository.GetAllUsers().Find(registration => registration.UserID == id);
+            var customer = repository.GetAllUsers().Find(registration => registration.EmailAddress == emailAddress);
 
             if (customer == null)
             {
-                ViewBag.Message = "Customer not available with ID" + id.ToString();
+                ViewBag.Message = "Customer not available with ID" + emailAddress.ToString();
                 return RedirectToAction("GetAllCustomers");
             }
-
-            ViewBag.States = GetStates(); // Ensure GetStates() returns List<SelectListItem>
-            ViewBag.Cities = GetCities(); // Ensure GetCities() returns List<SelectListItem>
+            ViewBag.States = GetStates(); 
+            ViewBag.Cities = GetCities();
+            customer.DateOfBirth = DateTime.ParseExact(customer.DateOfBirth.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
 
             return View(customer);
         }
@@ -115,7 +120,7 @@ namespace ShopcluesShoppingPortal.Controllers
         /// <returns></returns>
             
             [HttpPost]
-        public ActionResult EditCustomerDetails(int id, Registration registration)
+        public ActionResult EditCustomerDetails(string emailAddress, Registration registration)
         {
             try
             {
@@ -123,17 +128,19 @@ namespace ShopcluesShoppingPortal.Controllers
                 {
                     Repository repository = new Repository();
                     repository.UpdateCustomerData(registration);
-                    ViewBag.States = GetStates();
-                    ViewBag.Cities = GetCities();
-                    return View(registration);
+                    ModelState.Clear();
+                    ViewBag.Message = "Profile updated successfully";        
                 }
+                ViewBag.States = GetStates();
+                ViewBag.Cities = GetCities();
                 return View(registration);
             }        
             catch (Exception exception)
             {
-
+                ViewBag.States = GetStates();
+                ViewBag.Cities = GetCities();
                 ViewBag.Message = exception.Message;
-                return View();
+                return View(registration);
             }
         }
         /// <summary>
@@ -176,6 +183,7 @@ namespace ShopcluesShoppingPortal.Controllers
 {
     new SelectListItem { Value = "Kochi", Text = "Kochi" },
     new SelectListItem { Value = "Kozhikode", Text = "Kozhikode" },
+    new SelectListItem { Value = "Kottayam", Text = "Kottayam" },
     new SelectListItem { Value = "Thiruvanathapuram", Text = "Thiruvanathapuram" },
 };
         }

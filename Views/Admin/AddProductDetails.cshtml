@@ -5,13 +5,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Add product details</h2>
-
 @using (Html.BeginForm("AddProductDetails", "Admin", FormMethod.Post, new { enctype = "multipart/form-data", id = "productForm" }))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
+        <h2>Add product details</h2>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -19,7 +18,7 @@
             @Html.LabelFor(model => model.ProductName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.ProductName, new { htmlAttributes = new { @class = "form-control" } })
-                <span class="text-danger field-validation-valid" data-valmsg-for="ProductName" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.ProductName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -28,9 +27,9 @@
             <div class="col-md-10">
                 @Html.DropDownListFor(model => model.CategoryName,
                                       (IEnumerable<SelectListItem>)ViewBag.Categories,
-                                      "-----  Select category  -----",
+                                      "----- Select category -----",
                                       htmlAttributes: new { @class = "form-control" })
-                <span class="text-danger field-validation-valid" data-valmsg-for="CategoryName" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -38,7 +37,7 @@
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                <span class="text-danger field-validation-valid" data-valmsg-for="Description" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -46,7 +45,7 @@
             @Html.LabelFor(model => model.Stock, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Stock, new { htmlAttributes = new { @class = "form-control" } })
-                <span class="text-danger field-validation-valid" data-valmsg-for="Stock" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.Stock, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -54,7 +53,7 @@
             @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                <span class="text-danger field-validation-valid" data-valmsg-for="CreatedDate" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -62,7 +61,7 @@
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                <span class="text-danger field-validation-valid" data-valmsg-for="Price" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -70,7 +69,7 @@
             @Html.LabelFor(model => model.ProductImage, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 <input type="file" name="file" />
-                <span class="text-danger field-validation-valid" data-valmsg-for="ProductImage" data-valmsg-replace="true"></span>
+                @Html.ValidationMessageFor(model => model.ProductImage, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -88,68 +87,6 @@
     @Html.ActionLink("Back to List", "GetAllProductDetails")
 </div>
 
-@section scripts {
-    <script>
-        $(document).ready(function () {
-            // Function to validate individual fields
-            function validateField(field, errorMessage) {
-                var value = field.val().trim();
-                if (value === '') {
-                    field.next('.text-danger').text(errorMessage);
-                    return false;
-                } else {
-                    field.next('.text-danger').text('');
-                    return true;
-                }
-            }
-
-            // Validate fields on form submit
-            $('#submitBtn').click(function (event) {
-                var isValid = true;
-
-                isValid = validateField($('#ProductName'), 'Product Name is required.') && isValid;
-                isValid = validateField($('#CategoryName'), 'Category is required.') && isValid;
-                isValid = validateField($('#Description'), 'Description is required.') && isValid;
-                isValid = validateField($('#Stock'), 'Stock is required.') && isValid;
-                isValid = validateField($('#CreatedDate'), 'Created Date is required.') && isValid;
-                isValid = validateField($('#Price'), 'Price is required.') && isValid;
-                isValid = validateField($('#ProductImage'), 'Product Image is required.') && isValid;
-
-                // Prevent form submission if there are validation errors
-                if (!isValid) {
-                    event.preventDefault();
-                }
-            });
-
-            // Validate fields on blur (when focus is lost)
-            $('#ProductName').blur(function () {
-                validateField($(this), 'Product Name is required.');
-            });
-
-            $('#CategoryName').change(function () {
-                validateField($(this), 'Category is required.');
-            });
-
-            $('#Description').blur(function () {
-                validateField($(this), 'Description is required.');
-            });
-
-            $('#Stock').blur(function () {
-                validateField($(this), 'Stock is required.');
-            });
-
-            $('#CreatedDate').blur(function () {
-                validateField($(this), 'Created Date is required.');
-            });
-
-            $('#Price').blur(function () {
-                validateField($(this), 'Price is required.');
-            });
-
-            $('#ProductImage').blur(function () {
-                validateField($(this), 'Product Image is required.');
-            });
-        });
-    </script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
-

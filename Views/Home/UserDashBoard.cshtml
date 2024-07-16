@@ -17,19 +17,33 @@
         foreach (var item in Model)
         {
             <div class="card">
-                <div><img src="@Url.Content(item.ProductImage)" style="max-width:100%;max-height:100%" /></div>
+                @if (!string.IsNullOrEmpty(item.ProductImage))
+                {
+                    <div><img src="@Url.Content(item.ProductImage)" style="max-width:100%;max-height:100%" /></div>
+                }
+                else
+                {
+                    <div>Image not available</div>
+                }
 
                 <h1>@Html.DisplayFor(modelItem => item.ProductName)</h1>
                 <h4>@Html.DisplayFor(modelItem => item.CategoryName)</h4>
                 <p class="price">$ @Html.DisplayFor(modelItem => item.Price)</p>
                 <p>@Html.DisplayFor(modelItem => item.Description)</p>
-                <p>
 
-                <p><a href="@Url.Action("PlaceOrder", "Order", new { productId = item.ProductID })">Buy now</a></p>
-                @Html.ActionLink("Add to cart", "AddToCart", "Home", new { productId = item.ProductID }, null)
+                @if (item.Stock > 0)
+                {
+                    <p>
 
-                </p>
+                    <p><a href="@Url.Action("PlaceOrder", "Order", new { productId = item.ProductID })">Buy now</a></p>
+                    @Html.ActionLink("Add to cart", "AddToCart", "Home", new { productId = item.ProductID }, null)
 
+                    </p>
+                }
+                else
+                {
+                    <p class="text-danger"> Out of stock</p>
+                }
             </div>
         }
     }

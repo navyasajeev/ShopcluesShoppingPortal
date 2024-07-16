@@ -25,12 +25,13 @@
     border: none;
     outline: 0;
     padding: 12px;
-    color: white;
-    background-color: #000;
+    color: #000000;
+    background-color: #f87f7f;
     text-align: center;
     cursor: pointer;
     width: 100%;
     font-size: 18px;
+    text-decoration:none;
 }
 
 .card a:hover {

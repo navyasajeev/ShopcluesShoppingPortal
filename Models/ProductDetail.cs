@@ -12,33 +12,41 @@ namespace ShopcluesShoppingPortal.Models
     {
     
         [Key]
+        [Display(Name = "Product ID")]
         public int ProductID { get; set; }
 
-      //  [Required(ErrorMessage="Please enter the product name")]
+        [Required(ErrorMessage="Please enter the product name")]
+        [Display(Name = "Product name")]
         public string ProductName { get; set; }
 
-      //  [Required(ErrorMessage = "Please enter the category name")]
+        [Required(ErrorMessage = "Please enter the category name")]
+        [Display(Name = "Category name")]
         public string CategoryName { get; set; }
 
-     //   [Required(ErrorMessage = "Please enter the description of the product")]
+        [Required(ErrorMessage = "Please enter the description of the product")]
         public string Description { get; set; }
 
-     //   [Required(ErrorMessage = "Please enter the stock")]
+        [Required(ErrorMessage = "Please enter the stock")]
+        [Range(0, int.MaxValue, ErrorMessage = "Stock must be a positive number.")]
+
         public int Stock { get; set; }
 
         
-    //    [Required(ErrorMessage = "Enter the Created date")]
+        [Required(ErrorMessage = "Enter the Created date")]
         [DataType(DataType.Date)]
+        [Display(Name = "Created date")]
         public DateTime CreatedDate { get; set; }
 
-     //   [Required(ErrorMessage = "Enter the price")]
+       [Required(ErrorMessage = "Enter the price")]
+        [Range(0, int.MaxValue, ErrorMessage = "Price must be a positive number.")]
+
         public int Price { get; set; }
 
-   //     [Required(ErrorMessage ="Upload product image")]
+        [Required(ErrorMessage ="Upload product image")]
+        [Display(Name = "Product image")]
         public string ProductImage { get; set; }
 
-        //  [NotMapped]
-        //  public HttpPostedFileBase ProductImageFile { get; set; }
+    
 
     }
 }

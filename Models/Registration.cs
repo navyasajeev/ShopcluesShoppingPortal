@@ -8,13 +8,14 @@ namespace ShopcluesShoppingPortal.Models
 {
     public class Registration
     {
+        [Display(Name = "User ID")]
         public int UserID { get; set; }
 
-   //   [Required(ErrorMessage = "Enter first name")]
+        [Required(ErrorMessage = "Enter first name")]
         [Display(Name = "First name")]
         ///  [StringLength(maximumLength:7,MinimumLength =3,ErrorMessage ="Firstname length must be Maximum 7 & minimum 3")]
         public string FirstName { get; set; }
-  //      [Required(ErrorMessage = "Enter last name")]
+        [Required(ErrorMessage = "Enter last name")]
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
@@ -22,41 +23,40 @@ namespace ShopcluesShoppingPortal.Models
         [Display(Name = "Gender")]
         public char Gender { get; set; }
 
- //    [Required(ErrorMessage = "Select the date of birth")]
+        [Required(ErrorMessage = "Select the date of birth")]
         [Display(Name = "Date of birth")]
         [DataType(DataType.Date)]
         public DateTime DateOfBirth { get; set; }
 
 
-   //     [Required(ErrorMessage = "Enter phone number")]
+        [Required(ErrorMessage = "Enter phone number")]
         [Display(Name = "Phone number")]
         public string PhoneNumber { get; set; }
 
-  //   [Required(ErrorMessage = "Enter address")]
+        [Required(ErrorMessage = "Enter address")]
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-  //     [Required(ErrorMessage = "Enter the state")]
+       [Required(ErrorMessage = "Enter the state")]
         [Display(Name = "State")]
         public string State { get; set; }
 
-  //     [Required(ErrorMessage = "Enter the city")]
+        [Required(ErrorMessage = "Enter the city")]
         [Display(Name = "City")]
         public string City { get; set; }
 
-//        [Required(ErrorMessage = "Enter emailaddress")]
+        [Required(ErrorMessage = "Enter emailaddress")]
         [Display(Name = "Email address")]
         public string EmailAddress { get; set; }
 
-     //   [Required(ErrorMessage = "Enter password")]
-//[StringLength(maximumLength: 20, MinimumLength = 8, ErrorMessage = "Password length must be Maximum 20 & minimum 8")]
+        [Required(ErrorMessage = "Enter password")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-   //    [Required(ErrorMessage = "Enter confirm password")]
+        [Required(ErrorMessage = "Enter confirm password")]
         [Display(Name = "Confirm password")]
-      [DataType(DataType.Password)]
+        [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password mismatch")]
         public string ConfirmPassword { get; set; }
     }

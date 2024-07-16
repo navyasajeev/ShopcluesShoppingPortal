@@ -14,7 +14,7 @@
         // Validate Last Name
         var lastName = $('#LastName').val().trim();
         if (lastName === '') {
-            $('#lastname-error').text('Last name is required.');
+           $('#lastname-error').text('Last name is required.');
             isValid = false;
         } else {
             $('#lastname-error').text('');
@@ -22,16 +22,16 @@
 
         // Validate Gender (optional)
         // Assuming Gender is validated via radio buttons (M, F, O)
-        var genderSelected = $('input[name="Gender"]:checked').length;
-        if (genderSelected === 0) {
+           var genderSelected = $('input[name="Gender"]:checked').length;
+       if (genderSelected === 0) {
             $('#gender-error').text('Gender is required.');
             isValid = false;
-        } else {
+           } else {
             $('#gender-error').text('');
         }
 
         // Validate Date of Birth
-        var dateOfBirth = $('#DateOfBirth').val().trim();
+       var dateOfBirth = $('#DateOfBirth').val().trim();
         if (dateOfBirth === '') {
             $('#dateofbirth-error').text('Date of birth is required.');
             isValid = false;
@@ -43,8 +43,8 @@
         var phoneNumber = $('#PhoneNumber').val().trim();
         if (phoneNumber === '' || !/^\d{10}$/.test(phoneNumber)) {
             $('#phonenumber-error').text('Phone number must be 10 digits.');
-            isValid = false;
-        } else {
+           isValid = false;
+       } else {
             $('#phonenumber-error').text('');
         }
 
@@ -76,7 +76,7 @@
         }
 
         // Validate Email Address
-        var emailAddress = $('#EmailAddress').val().trim();
+       var emailAddress = $('#EmailAddress').val().trim();
         if (emailAddress === '' || !/^[\w-\.]+@([\w-]+\.)+[\w-]{2,}$/.test(emailAddress)) {
             $('#emailaddress-error').text('Enter a valid email address.');
             isValid = false;
@@ -125,6 +125,8 @@
             $('#firstname-error').text('First name is required.');
         } else if (firstName.length < 3 || firstName.length > 20) {
             $('#firstname-error').text('First name must be between 3 and 20 characters.');
+        } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+            $('#firstname-error').text('First name must contain only alphabetic characters.');
         } else {
             $('#firstname-error').text('');
         }
@@ -135,6 +137,8 @@
         var lastName = $(this).val().trim();
         if (lastName === '') {
             $('#lastname-error').text('Last name is required.');
+        } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+            $('#lastname-error').text('Last name must contain only alphabetic characters.');
         } else {
             $('#lastname-error').text('');
         }
